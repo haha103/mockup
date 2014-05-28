@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  count: 1
+  message: MyText
+  collected_at: 2014-05-26 12:31:31
+
+two:
+  count: 1
+  message: MyText
+  collected_at: 2014-05-26 12:31:31

@@ -1,0 +1,27 @@
+<h1>Listing msg_types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @msg_types.each do |msg_type| %>
+      <tr>
+        <td><%= msg_type.name %></td>
+        <td><%= link_to 'Show', msg_type %></td>
+        <td><%= link_to 'Edit', edit_msg_type_path(msg_type) %></td>
+        <td><%= link_to 'Destroy', msg_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Msg type', new_msg_type_path %>

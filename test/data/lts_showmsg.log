@@ -1,0 +1,71 @@
+*** First time in logfile        : 05-22 15:30:05.798 
+*** Last  time in logfile        : 05-23 07:32:24.670 
+*** Start-time ("ready to rock") : 05-22 15:36:42.214 
+
+EVENT     05-23 07:11:50.211 user_command   lts_run_tm '[1]'
+EVENT     05-23 07:15:24.626 system         TM startup phase completed: lts_run_tm '[1]'
+
+
+################################################################################
+ CRITICAL messages per unique pattern
+################################################################################
+
+
+
+################################################################################
+ ERROR messages per unique pattern
+################################################################################
+
+ 2143  ERROR     MS-group #     Expected: rab_assignment, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,undefined,undefined,undefined,undefined,undefined,none,none,ipv4,#,true,{activate,ggsn},undefined,undefined,undefined,none,undefined,false,undefined,#,undefined,undefined,undefined,undefined,undefined,undefined}}, Last event: #, Last TCs: [#]
+
+  562  ERROR     MS-group #     Expected: activate_acc, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, BSC-Id: #, RAI: #-#-#-#, RAC: #, BVCI: #, TLLI: #, MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,#,none,interactive,true,none,none,none,ipv4,#,true,{activate,ggsn},false,undefined,[#],none,[#],false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]
+
+  337  ERROR     MS-group #     Expected: rab_assignment, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,undefined,none,undefined,undefined,none,none,none,ipv4,#,true,{activate,ggsn},undefined,undefined,undefined,none,undefined,false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]
+
+  178  ERROR     MS-group #     Expected: rab_assignment, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,#,none,interactive,true,none,none,none,ipv4,#,true,{activate,ggsn},undefined,undefined,[#],none,[#],false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]
+
+  147  ERROR     MS-group #     Expected: activate_acc, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, BSC-Id: #, RAI: #-#-#-#, RAC: #, BVCI: #, TLLI: #, MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,#,none,interactive,false,none,none,none,ipv4,#,true,{activate,ggsn},false,undefined,[#],[#],[#],false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]
+
+   46  ERROR     MS-group #     Expected: rab_assignment, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,undefined,none,undefined,undefined,none,none,none,ipv4,#,true,{activate,ggsn},false,undefined,undefined,none,undefined,false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]
+
+   31  ERROR     MS-group #     Expected: rab_assignment, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,#,none,interactive,true,none,none,none,ipv4,#,true,{activate,ggsn},false,undefined,[#],none,[#],false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]
+
+   27  ERROR     MS-group #     Expected: rab_assignment, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,#,none,interactive,false,none,none,none,ipv4,#,true,{activate,ggsn},undefined,undefined,[#],none,[#],false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]
+
+    5  ERROR     MS-group #     Expected: rab_assignment, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,#,none,interactive,false,none,none,none,ipv4,#,true,{activate,ggsn},false,undefined,[#],none,[#],false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]
+
+    3  ERROR     MS-group #     Expected: activate_acc, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, BSC-Id: #, RAI: #-#-#-#, RAC: #, BVCI: #, TLLI: #, MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,#,none,interactive,false,none,none,none,ipv4,#,true,{activate,ggsn},false,undefined,[#],[#],[#],false,false,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]
+
+    2  ERROR     MS-group #     Expected: rab_assignment, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,#,none,interactive,false,none,none,none,ipv4,#,true,{activate,ggsn},false,#,[#],none,[#],false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]
+
+    1  ERROR     llas# - :LTT_  MHLIF::RemoveContext (MsgRemoveContext) - selnpcndallas11-#.seln.ete.ericsson.se - Bad msid (global/erl id = #)!
+
+    1  ERROR     llas# - :LTT_  MHLIF(STL_DEVICE_REMOVE_MS): : Received not valid MS index, MS index:#
+
+    1  ERROR     llas# - :LTT_  Can not find globalMsId for local
+
+    1  ERROR     MS-group #     Expected: nothing, Received: detach_req (Cause: none). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: none, Last event: #, Last TCs: [#]
+
+    1  ERROR     llas# - :LTT_  MHLIF:SearchUserEquip, Add to hashtable failed. deviceNo:# AllocatedMS: #
+
+
+
+################################################################################
+ WARNING messages per unique pattern
+################################################################################
+
+
+
+################################################################################
+ EVENT messages per unique pattern
+################################################################################
+
+    1  EVENT     system         TM startup phase completed: lts_run_tm '[#]'
+
+    1  EVENT     system         DALLAS system is initialized and ready to rock :-)
+
+    1  EVENT     system         notify_mhlif_disturbance is initialized DelayTime:#, DelayRate:#, DropRate:# 
+
+    1  EVENT     system         TM target reached: #
+
+    1  EVENT     user_command   lts_run_tm '[#]'

@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="col-md-6">
+		<h3 class="h-btn-align"><%= @single_msg_records.first.message %></h3>
+	</div>
+  <div class="col-md-6 btn-parent">
+    <button id="cancel_refresh" class="btn btn-primary pull-right">Cancel Auto Refresh</button>
+	</div>
+</div>
+
+<hr class="hr-condensed"/>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+			Graph
+		</h4>
+	</div>
+  <div class="panel-body">
+		<div class="center-block" id="chart" data-count="<%= @single_msg_records.map { |r| r.count }.reverse.join(",") %>" datax="<%= @single_msg_records.map { |r| r.collected_at.strftime("%Y-%m-%d_%H:%M:%S") }.sort.join(",") %>" data-refresh-url="<%= msg_show_logs_ajax_get_increment_path %>">
+					
+		</div>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+    <h4 class="panel-title">Details</h4>
+	</div>
+	<table class="table table-condensed table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Type</th>
+				<th>Count</th>
+				<th>Collected At</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% i = @single_msg_records.count - 1 %>
+			<% @single_msg_records.each do |r| %>
+				<tr>
+					<td><%= i %></td>
+					<td><%= r.msg_type.name %></td>
+					<td><%= r.count %></td>
+					<td><%= r.collected_at %></td>
+				</tr>
+				<% i -= 1 %>
+			<% end %>
+		</tbody>
+	</table>
+</div>

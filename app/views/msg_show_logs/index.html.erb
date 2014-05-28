@@ -1,0 +1,31 @@
+
+<%= link_to "Refresh", msg_show_logs_path(:update => 1), :class => "btn btn-primary" %>
+
+<hr/>
+
+<table class="table table-condensed table-hover">
+  <thead>
+    <tr>
+      <th style="width:60px;">Type</th>
+      <th style="width:60px;">Count</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+		<% @msg_show_logs.each do |m| %>
+      <tr class="clickable" href="<%= msg_show_log_path(m) %>">
+        <td><%= m.msg_type.name %></td>
+				<td><%= m.count %></td>
+				<td><%= m.message %></td>
+      </tr>
+		<% end %>
+  </tbody>
+</table>
+
+<div class="row">
+	<%= will_paginate @msg_show_logs,
+				:renderer => BootstrapPagination::Rails,
+				:class => "pagination-sm pagination-condensed pull-right",
+				:previous_label => "<<",
+				:next_label => ">>" %>
+</div>

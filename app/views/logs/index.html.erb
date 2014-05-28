@@ -1,0 +1,23 @@
+
+<%= link_to "Refresh", logs_path(:update => 1), :class => "btn btn-primary" %>
+
+<hr/>
+
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Count</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+		<% @showmsg_log.messages.each do |m| %>
+      <tr>
+        <td><%= m.type %></td>
+				<td><%= m.count %></td>
+				<td><%= m.msg %></td>
+      </tr>
+		<% end %>
+  </tbody>
+</table>
