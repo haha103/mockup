@@ -89,11 +89,35 @@ function clickable_dots () {
 
 		console.log("collected_at: " + collected_at);
 		console.log("message pattern: " + message);
+
+		var data = {
+			collected_at : collected_at,
+			message : message
+		};
+
+		var msgLogUrl = "/msg_logs/search";
+
+		$.ajax({
+			type: 'POST',
+			url: msgLogUrl,
+			data: data,
+			success: function(d) {
+				var tbody = $("table#tbl-msg-details tbody");
+				tbody.html("");
+				for (var i = 0; i < d.length; ++i) {
+					tbody.append($('<tr>')
+											 .append($('<td>')
+															 .append(i))
+											 .append($('<td>')
+															 .append(d[i].msg_type))
+											 .append($('<td>')
+															 .append(d[i].recorded_at))
+											 .append($('<td>')
+															 .append(d[i].message)));
+				}
+			}
+		});
 		
 	});
-	/*
-	$("div#chart svg rect.c3-event-rect").click(function () {
-		console.log($(this).prop("class"));
-	});
-	*/
+	
 }

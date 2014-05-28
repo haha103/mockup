@@ -1,5 +1,10 @@
 Mockup::Application.routes.draw do
 
+
+	post 'msg_logs/search' => 'msg_logs#ajax_search'
+	
+  resources :msg_logs
+
 	get 'msg_show_logs/ajax_get_increment' => 'msg_show_logs#ajax_get_increment'
 	
   resources :msg_show_logs

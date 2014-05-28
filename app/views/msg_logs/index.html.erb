@@ -1,0 +1,29 @@
+<h1>Listing msg_logs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Recorded at</th>
+      <th>Message</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @msg_logs.each do |msg_log| %>
+      <tr>
+        <td><%= msg_log.recorded_at %></td>
+        <td><%= msg_log.message %></td>
+        <td><%= link_to 'Show', msg_log %></td>
+        <td><%= link_to 'Edit', edit_msg_log_path(msg_log) %></td>
+        <td><%= link_to 'Destroy', msg_log, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Msg log', new_msg_log_path %>

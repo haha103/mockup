@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Recorded at:</strong>
+  <%= @msg_log.recorded_at %>
+</p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @msg_log.message %>
+</p>
+
+<%= link_to 'Edit', edit_msg_log_path(@msg_log) %> |
+<%= link_to 'Back', msg_logs_path %>

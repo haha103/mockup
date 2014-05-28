@@ -11,12 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140526045137) do
+ActiveRecord::Schema.define(version: 20140528064953) do
 
   create_table "logs", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "msg_logs", force: true do |t|
+    t.datetime "recorded_at"
+    t.string   "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "msg_type_id"
+  end
+
+  add_index "msg_logs", ["msg_type_id"], name: "index_msg_logs_on_msg_type_id"
 
   create_table "msg_show_logs", force: true do |t|
     t.integer  "count"

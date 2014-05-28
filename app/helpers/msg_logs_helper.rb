@@ -1,0 +1,2 @@
+module MsgLogsHelper
+end

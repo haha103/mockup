@@ -26,26 +26,16 @@
 	<div class="panel-heading">
     <h4 class="panel-title">Details</h4>
 	</div>
-	<table class="table table-condensed table-hover">
+	<table class="table table-condensed table-hover" id="tbl-msg-details">
 		<thead>
 			<tr>
 				<th>#</th>
 				<th>Type</th>
-				<th>Count</th>
-				<th>Collected At</th>
+				<th>Recorded At</th>
+        <th style="width:75%;">Detailed Message</th>
 			</tr>
 		</thead>
 		<tbody>
-			<% i = @single_msg_records.count - 1 %>
-			<% @single_msg_records.each do |r| %>
-				<tr>
-					<td><%= i %></td>
-					<td><%= r.msg_type.name %></td>
-					<td><%= r.count %></td>
-					<td><%= r.collected_at %></td>
-				</tr>
-				<% i -= 1 %>
-			<% end %>
 		</tbody>
 	</table>
 </div>
