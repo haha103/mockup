@@ -90,34 +90,70 @@ function clickable_dots () {
 		console.log("collected_at: " + collected_at);
 		console.log("message pattern: " + message);
 
-		var data = {
-			collected_at : collected_at,
-			message : message
-		};
+		load_msg_logs_table(1);
 
-		var msgLogUrl = "/msg_logs/search";
-
-		$.ajax({
-			type: 'POST',
-			url: msgLogUrl,
-			data: data,
-			success: function(d) {
-				var tbody = $("table#tbl-msg-details tbody");
-				tbody.html("");
-				for (var i = 0; i < d.length; ++i) {
-					tbody.append($('<tr>')
-											 .append($('<td>')
-															 .append(i))
-											 .append($('<td>')
-															 .append(d[i].msg_type))
-											 .append($('<td>')
-															 .append(d[i].recorded_at))
-											 .append($('<td>')
-															 .append(d[i].message)));
-				}
-			}
+		$("ul.pagination").on("click", "a", function(e) {
+			page = $(this).attr("data-page");
+			load_msg_logs_table(page);
+			e.preventDefault();
+			return false;
 		});
 		
 	});
 	
+}
+
+function load_msg_logs_table(page) {
+	var data = {
+		collected_at : collected_at,
+		message : message,
+		page: page
+	};
+
+	var msgLogUrl = "/msg_logs/search";
+
+	$.ajax({
+		type: 'POST',
+		url: msgLogUrl,
+		data: data,
+		success: function(d) {
+			m = d.detailed_messages;
+			page_count = d.page_count;
+			var tbody = $("table#tbl-msg-details tbody");
+			tbody.html("");
+			for (var i = 0; i < m.length; ++i) {
+				tbody.append($('<tr>')
+										 .append($('<td>')
+														 .append(i))
+										 .append($('<td>')
+														 .append(m[i].msg_type))
+										 .append($('<td>')
+														 .append(m[i].recorded_at))
+										 .append($('<td>')
+														 .append(m[i].message)));
+			}
+
+			var p = $('ul.pagination');
+			p.html("");
+			prev_page = page - 1;
+			if (prev_page <= 0) {
+				p.append($("<li>").prop("class", "disabled").append($("<a>").prop("href", "javascript::void()").attr("data-page", prev_page).append("&laquo;")));
+			} else {
+				p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", prev_page).append("&laquo;")));
+			}
+			for (var i = 1; i <= page_count; ++i) {
+				if (i == page) {
+					p.append($("<li>").prop("class", "disabled").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
+				} else {
+					p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
+				}
+			}
+			next_page = page + 1;
+			if (page == page_count) {
+				p.append($("<li>").prop("class", "disabled").append($("<a>").prop("href", "javascript::void()").attr("data-page", next_page).append("&raquo;")));
+			} else {
+				p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", next_page).append("&raquo;")));
+			}
+		}
+	});
 }

@@ -7,9 +7,13 @@ class MsgLogsController < ApplicationController
   def	ajax_search
 		collected_at = Time.parse(params[:collected_at])
 		message = params[:message]
+		page = params[:page].to_i
+		page_limit = 20
 		detailed_messages = []
 
-		msg_logs = MsgLog.where("message LIKE ? AND recorded_at < ?", "%#{message}%", collected_at)
+		total_count = MsgLog.where("message LIKE ? AND recorded_at < ?", "%#{message}%", collected_at).count
+		
+		msg_logs = MsgLog.where("message LIKE ? AND recorded_at < ?", "%#{message}%", collected_at).limit(page_limit).offset((page - 1) * page_limit)
 
 		msg_logs.each do |l|
 			detailed_message = {}
@@ -18,9 +22,14 @@ class MsgLogsController < ApplicationController
 			detailed_message[:message] = l.message
 			detailed_messages << detailed_message
 		end
+
+		data = {
+			:page_count => (total_count / page_limit.to_f).ceil,
+			:detailed_messages => detailed_messages
+		}
 		
 		respond_to do |f|
-			f.json { render :json => detailed_messages }
+			f.json { render :json => data }
 		end
 	end
 	
