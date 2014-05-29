@@ -8,7 +8,7 @@ class MsgLogsController < ApplicationController
 		collected_at = Time.parse(params[:collected_at])
 		message = params[:message]
 		page = params[:page].to_i
-		page_limit = 20
+		page_limit = 10
 		detailed_messages = []
 
 		total_count = MsgLog.where("message LIKE ? AND recorded_at < ?", "%#{message}%", collected_at).count

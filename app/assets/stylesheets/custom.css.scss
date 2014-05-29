@@ -1,3 +1,7 @@
+* {
+	border-radius: 0px !important;
+}
+
 .pagination-condensed {
 	margin-top: 5px;
 	margin-bottom: 0px;
@@ -16,4 +20,19 @@
 .h-btn-align {
 	margin-top: 8px;
 	margin-bottom: 0px;
+}
+
+.h-btn-sm-align {
+	margin-top: 4px;
+	margin-bottom: 0px;
+}
+
+.panel-title-btn-sm-align {
+	height:20px;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+.modal-header button.h4-align {
+	margin-top: 2px;
 }

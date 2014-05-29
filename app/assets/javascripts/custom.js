@@ -33,12 +33,20 @@ function auto_refresh_toggle_handlers () {
 
 	$("div.btn-parent").on('click', 'button#cancel_refresh', function() {
 		clearInterval(auto_refresh_id);
-		$("button#cancel_refresh").prop("id", "start_refresh").text("Start Auto Refresh");
+		$("button#cancel_refresh").toggleClass("disabled");
+		$("button#start_refresh").toggleClass("disabled");
+		$("button#refresh").toggleClass("disabled");
 	});
 
 	$("div.btn-parent").on('click', 'button#start_refresh', function() {
 		auto_refresh_id = setInterval(ajax_refresh_graph, 3000);
-		$("button#start_refresh").prop("id", "cancel_refresh").text("Cancel Auto Refresh");
+		$("button#start_refresh").toggleClass("disabled");
+		$("button#cancel_refresh").toggleClass("disabled");
+		$("button#refresh").toggleClass("disabled");
+	});
+
+	$("div.btn-parent").on('click', 'button#refresh', function() {
+		ajax_refresh_graph();
 	});
 }
 
@@ -85,12 +93,14 @@ function clickable_dots () {
 	d3.selectAll("rect.c3-event-rect").on("click", function (d, i) {
 
 		collected_at = $("#chart").attr("datax").split(",")[i];
-		message = $("h3").text();
+		message = $("p#msg-group").text();
 
 		console.log("collected_at: " + collected_at);
 		console.log("message pattern: " + message);
 
 		load_msg_logs_table(1);
+
+		$("#details-modal").modal('show');
 
 		$("ul.pagination").on("click", "a", function(e) {
 			page = $(this).attr("data-page");

@@ -1,43 +1,76 @@
+<ol class="breadcrumb">
+  <li><a href="<%= msg_show_logs_path %>">Statistics</a></li>
+  <li class="active">Details</li>
+</ol>
+
 <div class="row">
-  <div class="col-md-6">
-		<h3 class="h-btn-align"><%= @single_msg_records.first.message %></h3>
-	</div>
-  <div class="col-md-6 btn-parent">
-    <button id="cancel_refresh" class="btn btn-primary pull-right">Cancel Auto Refresh</button>
+	<div class="col-md-6">
+		<h3 class="h-btn-sm-align">Message Group</h3>
 	</div>
 </div>
-
 <hr class="hr-condensed"/>
+<p id="msg-group"><%= @single_msg_records.first.message %></p>
+
+<br/>
 
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h4 class="panel-title">
-			Graph
-		</h4>
+    <div class="row">
+			<div class="col-md-6">
+				<h4 class="panel-title-btn-sm-align"><span class="glyphicon glyphicon-signal"></span>
+			&nbsp;Trend</h4>
+			</div>
+      <div class="col-md-6 btn-parent">
+				<div class="btn-group btn-group-sm pull-right">
+					<button id="cancel_refresh" class="btn btn-default"><span class="glyphicon glyphicon-stop"></span></button>
+					<button id="start_refresh" class="btn btn-default disabled"><span class="glyphicon glyphicon-play"></span></button>
+					<button id="refresh" class="btn btn-default disabled"><span class="glyphicon glyphicon-refresh"></span></button>
+				</div>
+			</div>
+		</div>
 	</div>
-  <div class="panel-body">
+	<div class="panel-body">
 		<div class="center-block" id="chart" data-count="<%= @single_msg_records.map { |r| r.count }.reverse.join(",") %>" datax="<%= @single_msg_records.map { |r| r.collected_at.strftime("%Y-%m-%d_%H:%M:%S") }.sort.join(",") %>" data-refresh-url="<%= msg_show_logs_ajax_get_increment_path %>">
 					
 		</div>
 	</div>
 </div>
 
-<div class="pagination-container pull-right">
-  <ul class="pagination pagination-sm">
-		
-  </ul>
-</div>
+<div class="modal fade" id="details-modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close h4-align" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Message Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+					<div class="pagination-container col-md-12">
+						<ul class="pagination pagination-sm pagination-condensed pull-right">
+							
+						</ul>
+					</div>
+				</div>
 
-<table class="table table-condensed table-hover" id="tbl-msg-details">
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>Type</th>
-			<th>Recorded At</th>
-      <th style="width:75%;">Detailed Message</th>
-		</tr>
-	</thead>
-	<tbody>
-	</tbody>
-</table>
+        <br/>
+
+				<table class="table table-condensed table-bordered table-hover" id="tbl-msg-details">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Type</th>
+							<th>Recorded At</th>
+							<th style="width:60%;">Detailed Message</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
