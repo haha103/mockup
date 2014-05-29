@@ -18,5 +18,6 @@
 //= require bootstrap-wysihtml5/locales/zh-CN
 //= require d3
 //= require c3.min
+//= require underscore
 //= require turbolinks
 //= require_tree .

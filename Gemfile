@@ -52,3 +52,4 @@ gem 'rails-i18n', '~> 4.0.0' # For 4.0.x
 gem 'paperclip', github: 'thoughtbot/paperclip'
 gem 'bootstrap-wysihtml5-rails'
 gem "d3-rails"
+gem 'underscore-rails'
