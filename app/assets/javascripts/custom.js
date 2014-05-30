@@ -103,8 +103,10 @@ function clickable_dots () {
 		$("#details-modal").modal('show');
 
 		$("ul.pagination").on("click", "a", function(e) {
-			page = $(this).attr("data-page");
-			load_msg_logs_table(page);
+			if (!$(this).parent().hasClass("disabled")) {
+				page = parseInt($(this).attr("data-page"));
+				load_msg_logs_table(page);
+			}
 			e.preventDefault();
 			return false;
 		});
