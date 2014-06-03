@@ -137,6 +137,7 @@ function load_msg_logs_table(collected_at, message, page_limit, page) {
 			var tbody = $("table#tbl-msg-details tbody");
 			tbody.html("");
 			for (var i = 0; i < m.length; ++i) {
+				console.log(m);
 				tbody.append($('<tr>')
 										 .append($('<td>')
 														 .append(i + (page - 1) * page_limit))

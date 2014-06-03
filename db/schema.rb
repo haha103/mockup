@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140528064953) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "logs", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -20,13 +23,13 @@ ActiveRecord::Schema.define(version: 20140528064953) do
 
   create_table "msg_logs", force: true do |t|
     t.datetime "recorded_at"
-    t.string   "message"
+    t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "msg_type_id"
   end
 
-  add_index "msg_logs", ["msg_type_id"], name: "index_msg_logs_on_msg_type_id"
+  add_index "msg_logs", ["msg_type_id"], name: "index_msg_logs_on_msg_type_id", using: :btree
 
   create_table "msg_show_logs", force: true do |t|
     t.integer  "count"
@@ -37,7 +40,7 @@ ActiveRecord::Schema.define(version: 20140528064953) do
     t.integer  "msg_type_id"
   end
 
-  add_index "msg_show_logs", ["msg_type_id"], name: "index_msg_show_logs_on_msg_type_id"
+  add_index "msg_show_logs", ["msg_type_id"], name: "index_msg_show_logs_on_msg_type_id", using: :btree
 
   create_table "msg_types", force: true do |t|
     t.string   "name"
