@@ -1,0 +1,27 @@
+[
+	{
+		"count"   : "2143",
+		"msg_type" : "ERROR",
+		"message" : "MS-group #     Expected: rab_assignment, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,undefined,undefined,undefined,undefined,undefined,none,none,ipv4,#,true,{activate,ggsn},undefined,undefined,undefined,none,undefined,false,undefined,#,undefined,undefined,undefined,undefined,undefined,undefined}}, Last event: #, Last TCs: [#]"
+	},
+	{
+		"count"   : "562",
+		"msg_type" : "ERROR",
+		"message" : "MS-group #     Expected: activate_acc, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, BSC-Id: #, RAI: #-#-#-#, RAC: #, BVCI: #, TLLI: #, MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,#,none,interactive,true,none,none,none,ipv4,#,true,{activate,ggsn},false,undefined,[#],none,[#],false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]"
+	},
+	{
+		"count"   : "337",
+		"msg_type" : "ERROR",
+		"message" : "MS-group #     Expected: rab_assignment, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,undefined,none,undefined,undefined,none,none,none,ipv4,#,true,{activate,ggsn},undefined,undefined,undefined,none,undefined,false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]"
+	},
+	{
+		"count"   : "178",
+		"msg_type" : "ERROR",
+		"message" : "MS-group #     Expected: rab_assignment, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, RNC-Id: #, RAI: #-#-#-#, RAC: #, SCCP-Id: # (rnc), SCCP-IdTmp: none (none), MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,#,none,interactive,true,none,none,none,ipv4,#,true,{activate,ggsn},undefined,undefined,[#],none,[#],false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]"
+	},
+	{
+		"count"   : "147",
+		"msg_type" : "ERROR",
+		"message" : "MS-group #     Expected: activate_acc, Received: activate_rej (Cause: Insufficient resources). MS-Id: #, IMSI: #, P-TMSI: #, BSC-Id: #, RAI: #-#-#-#, RAC: #, BVCI: #, TLLI: #, MS-state: attached, Active contexts: [#], Ongoing: {activate,{pdp_context,primary,#,undefined,#,#,#,#,#,#,#,none,interactive,false,none,none,none,ipv4,#,true,{activate,ggsn},false,undefined,[#],[#],[#],false,undefined,#,undefined,undefined,undefined,none,undefined,undefined}}, Last event: #, Last TCs: [#]"
+	}
+]

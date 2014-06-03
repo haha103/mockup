@@ -53,3 +53,4 @@ gem 'paperclip', github: 'thoughtbot/paperclip'
 gem 'bootstrap-wysihtml5-rails'
 gem "d3-rails"
 gem 'underscore-rails'
+gem 'sqlite3_ar_regexp', '~> 2.0'

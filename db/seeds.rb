@@ -6,29 +6,33 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-['ERROR', 'CRITICAL', 'WARNING', 'EVENT'].each do |t|
+require 'time'
+
+['ERROR', 'CRITICAL', 'WARNING', 'EVENT', 'DEBUG', 'INFO'].each do |t|
 	MsgType.create(name: t)
 end
 
 collected_at = Time.now
 
-1.upto(5) do |i|
-	srand
+ActiveSupport::JSON.decode(File.read('db/seeds/msgshowlog.json')).each do |j|
 	m = MsgShowLog.new
-	m.msg_type = MsgType.find(1)
-	m.count = rand(5000)
+	m.msg_type = MsgType.where(name: j["msg_type"]).first
+	m.count = j["count"].to_i
 	m.collected_at = collected_at
-	m.message = "Randomly generated error message group #{i}"
+	m.message = j["message"]
 	m.save
 end
 
-MsgShowLog.all.each do |l|
-	1.upto(50) do |i|
-		srand
-		m = MsgLog.new
-		m.msg_type = l.msg_type
-		m.message = "#{l.message} ... details #{i}"
-		m.recorded_at = l.collected_at - ((50 - i) * 60)
-		m.save
-	end
+f = File.open("db/seeds/dallas_msg.log", "r")
+f.each_line do |l|
+	fields = l.split(/\s+/)
+	msg_type = fields.shift
+	ts = fields.shift
+	message = fields.join(" ")
+	m = MsgLog.new
+	m.msg_type = MsgType.where(name: msg_type).first
+	m.recorded_at = Time.parse(ts)
+	m.message = message
+	m.save
 end
+f.close

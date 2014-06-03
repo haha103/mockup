@@ -93,19 +93,21 @@ function clickable_dots () {
 	d3.selectAll("rect.c3-event-rect").on("click", function (d, i) {
 
 		collected_at = $("#chart").attr("datax").split(",")[i];
-		message = $("p#msg-group").text();
+		message = $("pre#msg-group").text();
 
 		console.log("collected_at: " + collected_at);
 		console.log("message pattern: " + message);
 
-		load_msg_logs_table(1);
+		page_limit = 5;
+
+		load_msg_logs_table(collected_at, message, page_limit, 1);
 
 		$("#details-modal").modal('show');
 
 		$("ul.pagination").on("click", "a", function(e) {
 			if (!$(this).parent().hasClass("disabled")) {
 				page = parseInt($(this).attr("data-page"));
-				load_msg_logs_table(page);
+				load_msg_logs_table(collected_at, message, page_limit, page);
 			}
 			e.preventDefault();
 			return false;
@@ -115,10 +117,11 @@ function clickable_dots () {
 	
 }
 
-function load_msg_logs_table(page) {
+function load_msg_logs_table(collected_at, message, page_limit, page) {
 	var data = {
 		collected_at : collected_at,
 		message : message,
+		page_limit : page_limit,
 		page: page
 	};
 
@@ -136,13 +139,13 @@ function load_msg_logs_table(page) {
 			for (var i = 0; i < m.length; ++i) {
 				tbody.append($('<tr>')
 										 .append($('<td>')
-														 .append(i))
+														 .append(i + (page - 1) * page_limit))
 										 .append($('<td>')
 														 .append(m[i].msg_type))
 										 .append($('<td>')
 														 .append(m[i].recorded_at))
 										 .append($('<td>')
-														 .append(m[i].message)));
+														 .append(m[i].message.replace(/, /g, ",").replace(/,/g, ", "))));
 			}
 
 			var p = $('ul.pagination');
@@ -153,11 +156,50 @@ function load_msg_logs_table(page) {
 			} else {
 				p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", prev_page).append("&laquo;")));
 			}
-			for (var i = 1; i <= page_count; ++i) {
-				if (i == page) {
-					p.append($("<li>").prop("class", "disabled").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
-				} else {
-					p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
+
+			if (page_count >= 10) {
+				if (page <= 6) { // close to 1st page
+
+					for (var i = 1; i <= 10; ++i) {
+						if (i == page) {
+							p.append($("<li>").prop("class", "disabled").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
+						} else {
+							p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
+						}
+					}
+					p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", page_count).append("... " + page_count)));
+					
+				} else if (page < page_count - 5 ) { // in between
+					
+					p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", 1).append(1 + " ...")));
+					for (var i = page - 5; i <= page + 4; ++i) {
+						if (i == page) {
+							p.append($("<li>").prop("class", "disabled").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
+						} else {
+							p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
+						}
+					}
+					p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", page_count).append("... " + page_count)));
+					
+				} else { // close to last page
+
+					p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", 1).append(1 + " ...")));
+					for (var i = page - 5; i <= page_count; ++i) {
+						if (i == page) {
+							p.append($("<li>").prop("class", "disabled").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
+						} else {
+							p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
+						}
+					}
+					
+				}
+			} else {
+				for (var i = 1; i <= page_count; ++i) {
+					if (i == page) {
+						p.append($("<li>").prop("class", "disabled").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
+					} else {
+						p.append($("<li>").append($("<a>").prop("href", "javascript::void()").attr("data-page", i).append(i)));
+					}
 				}
 			}
 			next_page = page + 1;
@@ -168,4 +210,14 @@ function load_msg_logs_table(page) {
 			}
 		}
 	});
+}
+
+function htmlEncode(value){
+  //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+  //then grab the encoded contents back out.  The div never exists on the page.
+  return $('<div/>').text(value).html();
+}
+
+function htmlDecode(value){
+  return $('<div/>').html(value).text();
 }
