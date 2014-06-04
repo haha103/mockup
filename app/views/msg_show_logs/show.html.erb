@@ -102,9 +102,12 @@
 				</div>
         <div class="row">
           <div class="col-md-4">
-						<div class="input-group input-group-sm" style="margin-top: 4px;">
+						<div id="msg-logs-filter" class="input-group input-group-sm" style="margin-top: 4px;">
 							<span class="input-group-addon glyphicon glyphicon-search" style="top: 0px;"></span>
-							<input type="text" class="form-control" placeholder="Filter results ...">
+							<input type="text" class="form-control" id="filter-content" placeholder="Filter results ...">
+							<span class="input-group-btn">
+								<button class="btn btn-default" id="filter-go" type="button">Go!</button>
+							</span>
 						</div>
 					</div>
 					<div class="pagination-container col-md-8">

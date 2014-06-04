@@ -32,9 +32,20 @@ $(document).on('ready page:load', function() {
 
 	searchGoBtnHandler();
 
+	msgLogsFilterBtnHandler();
+
 	$('.datetimepicker').datetimepicker();
 	
 });
+
+function msgLogsFilterBtnHandler() {
+	$("button#filter-go").click(function(e) {
+		var filter_content = $(this).closest("div#msg-logs-filter").find('input#filter-content').val();
+		var end_ts = $("input#end-ts").val();
+		load_msg_logs_table(end_ts, 10, 1, filter_content);
+		e.preventDefault();
+	});
+}
 
 function auto_refresh_toggle_handlers () {
 	var auto_refresh_id = setInterval(ajax_refresh_graph, 3000);
@@ -118,25 +129,26 @@ function clickable_dots () {
 
 function show_msg_logs_modal(collected_at) {
 	page_limit = 10;
-	load_msg_logs_table(collected_at, page_limit, 1);
+	load_msg_logs_table(collected_at, page_limit, 1, "");
 	$("#details-modal").modal('show');
 	$("ul.pagination").on("click", "a", function(e) {
 		if (!$(this).parent().hasClass("disabled")) {
 			page = parseInt($(this).attr("data-page"));
-			load_msg_logs_table(collected_at, page_limit, page);
+			load_msg_logs_table(collected_at, page_limit, page, "");
 		}
 		e.preventDefault();
 		return false;
 	});
 }
 
-function load_msg_logs_table(collected_at, page_limit, page) {
+function load_msg_logs_table(collected_at, page_limit, page, filter) {
 	message = $("pre#msg-group").text();
 	var data = {
 		collected_at : collected_at,
 		message : message,
 		page_limit : page_limit,
-		page: page
+		page: page,
+		filter: filter
 	};
 
 	var msgLogUrl = "/msg_logs/search";
