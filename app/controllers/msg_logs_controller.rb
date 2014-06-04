@@ -11,11 +11,15 @@ class MsgLogsController < ApplicationController
 		page_limit = params[:page_limit].to_i
 		detailed_messages = []
 
-		pattern = message.gsub("#", "%")
+		pattern = message.gsub("#", "%").gsub(/\s+/, ' ')
 		
 		total_count = MsgLog.where("message LIKE ? AND recorded_at < ?", pattern, collected_at).count
 		
 		msg_logs = MsgLog.where("message LIKE ? AND recorded_at < ?", pattern, collected_at).limit(page_limit).offset((page - 1) * page_limit)
+
+		test = MsgLog.where("message LIKE ? AND recorded_at < ?", pattern, collected_at).limit(page_limit).offset((page - 1) * page_limit).to_sql
+
+		puts "#{test}"
 
 		msg_logs.each do |l|			
 			detailed_message = {}
