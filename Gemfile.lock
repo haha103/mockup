@@ -40,6 +40,8 @@ GEM
       sass (~> 3.2)
     bootstrap-wysihtml5-rails (0.3.1.24)
       railties (>= 3.0)
+    bootstrap3-datetimepicker-rails (3.0.0)
+      momentjs-rails (~> 2.5.0)
     builder (3.1.4)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -72,6 +74,8 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (4.7.5)
+    momentjs-rails (2.5.1)
+      railties (>= 3.1)
     multi_json (1.10.1)
     pg (0.17.1)
     polyglot (0.3.4)
@@ -138,11 +142,13 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.1.1)
   bootstrap-wysihtml5-rails
+  bootstrap3-datetimepicker-rails (~> 3.0.0)
   coffee-rails (~> 4.0.0)
   d3-rails
   holder_rails
   jbuilder (~> 1.2)
   jquery-rails
+  momentjs-rails (~> 2.5.0)
   paperclip!
   pg
   rails (= 4.0.4)

@@ -17,14 +17,23 @@ class MsgLogsController < ApplicationController
 		
 		msg_logs = MsgLog.where("message LIKE ? AND recorded_at < ?", pattern, collected_at).limit(page_limit).offset((page - 1) * page_limit)
 
-		test = MsgLog.where("message LIKE ? AND recorded_at < ?", pattern, collected_at).limit(page_limit).offset((page - 1) * page_limit).to_sql
-
-		puts "#{test}"
-
 		msg_logs.each do |l|			
 			detailed_message = {}
 			detailed_message[:msg_type] = l.msg_type.name
 			detailed_message[:recorded_at] = l.recorded_at
+			msid = ""
+			imsi = ""
+			matched = /.*MS-Id: ([^,]+),\s*IMSI: ([^,]+),.*Last event: (.*),\s*Last TCs: \[(.*)\]/.match(l.message)
+			if matched && matched.captures.length == 4
+				msid = matched.captures[0]
+				imsi = matched.captures[1]
+				last_event = matched.captures[2]
+				last_tcs = matched.captures[3]
+			end
+			detailed_message[:msid] = msid
+			detailed_message[:imsi] = imsi
+			detailed_message[:last_event] = last_event
+			detailed_message[:last_tcs] = last_tcs
 			detailed_message[:message] = l.message
 			detailed_messages << detailed_message
 		end

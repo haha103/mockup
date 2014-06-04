@@ -8,7 +8,7 @@ $(document).on('ready page:load', function() {
 	datax = $("#chart").attr("datax").split(",");
 	
 	var chart = c3.generate({
-		size: { height: 500 },
+		size: { height: 400 },
 		bindto: "#chart",
 		data: {
 			columns: [
@@ -25,6 +25,14 @@ $(document).on('ready page:load', function() {
 	clickable_dots();
 
 	auto_refresh_toggle_handlers();
+
+	alertCloseBtnHandler();
+
+	searchResetBtnHandler();
+
+	searchGoBtnHandler();
+
+	$('.datetimepicker').datetimepicker();
 	
 });
 
@@ -59,7 +67,7 @@ function update_chart (data) {
 	datax = $("#chart").attr("datax").split(",");
 	datax = datax.concat(data.collected_at);
 	var chart = c3.generate({
-		size: { height: 500 },
+		size: { height: 400 },
 		bindto: "#chart",
 		data: {
 			columns: [
@@ -91,33 +99,39 @@ function ajax_refresh_graph () {
 
 function clickable_dots () {
 	d3.selectAll("rect.c3-event-rect").on("click", function (d, i) {
-
 		collected_at = $("#chart").attr("datax").split(",")[i];
-		message = $("pre#msg-group").text();
-
 		console.log("collected_at: " + collected_at);
-		console.log("message pattern: " + message);
 
-		page_limit = 5;
+		var tb_start_ts = $("input#start-ts");
+		var tb_end_ts = $("input#end-ts");
 
-		load_msg_logs_table(collected_at, message, page_limit, 1);
-
-		$("#details-modal").modal('show');
-
-		$("ul.pagination").on("click", "a", function(e) {
-			if (!$(this).parent().hasClass("disabled")) {
-				page = parseInt($(this).attr("data-page"));
-				load_msg_logs_table(collected_at, message, page_limit, page);
-			}
-			e.preventDefault();
-			return false;
-		});
-		
+		if (tb_start_ts.val() == "") {
+			tb_start_ts.val(collected_at);
+		} else if (tb_end_ts.val() == "") {
+			tb_end_ts.val(collected_at);
+		} else {
+			
+		}
+		//show_msg_logs_modal(collected_at);
 	});
-	
 }
 
-function load_msg_logs_table(collected_at, message, page_limit, page) {
+function show_msg_logs_modal(collected_at) {
+	page_limit = 5;
+	load_msg_logs_table(collected_at, page_limit, 1);
+	$("#details-modal").modal('show');
+	$("ul.pagination").on("click", "a", function(e) {
+		if (!$(this).parent().hasClass("disabled")) {
+			page = parseInt($(this).attr("data-page"));
+			load_msg_logs_table(collected_at, page_limit, page);
+		}
+		e.preventDefault();
+		return false;
+	});
+}
+
+function load_msg_logs_table(collected_at, page_limit, page) {
+	message = $("pre#msg-group").text();
 	var data = {
 		collected_at : collected_at,
 		message : message,
@@ -138,14 +152,23 @@ function load_msg_logs_table(collected_at, message, page_limit, page) {
 			tbody.html("");
 			for (var i = 0; i < m.length; ++i) {
 				console.log(m);
-				tbody.append($('<tr>')
+				tbody.append($('<tr class="info">')
 										 .append($('<td>')
 														 .append(i + (page - 1) * page_limit))
 										 .append($('<td>')
 														 .append(m[i].msg_type))
 										 .append($('<td>')
-														 .append(m[i].recorded_at))
+														 .append(moment(m[i].recorded_at).format('YYYY-MM-DD hh:mm:ss')))
 										 .append($('<td>')
+														 .append(m[i].msid))
+										 .append($('<td>')
+														 .append(m[i].imsi))
+										 .append($('<td>')
+														 .append(m[i].last_event))
+										 .append($('<td>')
+														 .append(m[i].last_tcs)))
+					   .append($("<tr>")
+										 .append($('<td colspan="7">')
 														 .append(m[i].message.replace(/, /g, ",").replace(/,/g, ", "))));
 			}
 
@@ -221,4 +244,26 @@ function htmlEncode(value){
 
 function htmlDecode(value){
   return $('<div/>').html(value).text();
+}
+
+function alertCloseBtnHandler() {
+	$(".alert-close").click(function() {
+		$(this).parent(".alert").remove();
+	});
+}
+
+function searchResetBtnHandler() {
+	$("#search-reset").click(function() {
+		$(this).closest(".panel").find("input").val('');
+	});
+}
+
+function searchGoBtnHandler() {
+
+	$("button#search-go").click(function(e) {
+		var start_ts = $("input#start-ts").val();
+		var end_ts = $("input#end-ts").val();
+		show_msg_logs_modal(end_ts);
+		e.preventDefault();
+	});
 }

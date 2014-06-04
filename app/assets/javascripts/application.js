@@ -19,5 +19,7 @@
 //= require d3
 //= require c3.min
 //= require underscore
+//= require moment
+//= require bootstrap-datetimepicker
 //= require turbolinks
 //= require_tree .
