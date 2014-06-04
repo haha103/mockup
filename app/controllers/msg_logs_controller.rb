@@ -21,19 +21,10 @@ class MsgLogsController < ApplicationController
 			detailed_message = {}
 			detailed_message[:msg_type] = l.msg_type.name
 			detailed_message[:recorded_at] = l.recorded_at
-			msid = ""
-			imsi = ""
-			matched = /.*MS-Id: ([^,]+),\s*IMSI: ([^,]+),.*Last event: (.*),\s*Last TCs: \[(.*)\]/.match(l.message)
-			if matched && matched.captures.length == 4
-				msid = matched.captures[0]
-				imsi = matched.captures[1]
-				last_event = matched.captures[2]
-				last_tcs = matched.captures[3]
-			end
-			detailed_message[:msid] = msid
-			detailed_message[:imsi] = imsi
-			detailed_message[:last_event] = last_event
-			detailed_message[:last_tcs] = last_tcs
+			detailed_message[:msid] = l.msid
+			detailed_message[:imsi] = l.imsi
+			detailed_message[:last_event] = l.last_event
+			detailed_message[:last_tcs] = l.last_tcs
 			detailed_message[:message] = l.message
 			detailed_messages << detailed_message
 		end

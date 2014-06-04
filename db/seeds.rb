@@ -33,6 +33,13 @@ f.each_line do |l|
 	m.msg_type = MsgType.where(name: msg_type).first
 	m.recorded_at = Time.parse(ts)
 	m.message = message
+	matched = /.*MS-Id: ([^,]+),\s*IMSI: ([^,]+),.*Last event: (.*),\s*Last TCs: \[(.*)\]/.match(message)
+	if matched && matched.captures.length == 4
+		m.msid = matched.captures[0]
+		m.imsi = matched.captures[1]
+		m.last_event = matched.captures[2]
+		m.last_tcs = matched.captures[3]
+	end
 	m.save
 end
 f.close

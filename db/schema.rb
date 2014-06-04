@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140528064953) do
+ActiveRecord::Schema.define(version: 20140604125221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,10 @@ ActiveRecord::Schema.define(version: 20140528064953) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "msg_type_id"
+    t.string   "msid"
+    t.string   "imsi"
+    t.text     "last_event"
+    t.text     "last_tcs"
   end
 
   add_index "msg_logs", ["msg_type_id"], name: "index_msg_logs_on_msg_type_id", using: :btree
