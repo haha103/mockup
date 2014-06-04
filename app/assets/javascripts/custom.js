@@ -134,7 +134,8 @@ function show_msg_logs_modal(collected_at) {
 	$("ul.pagination").on("click", "a", function(e) {
 		if (!$(this).parent().hasClass("disabled")) {
 			page = parseInt($(this).attr("data-page"));
-			load_msg_logs_table(collected_at, page_limit, page, "");
+				var filter_content = $("div#msg-logs-filter").find('input#filter-content').val();
+			load_msg_logs_table(collected_at, page_limit, page, filter_content);
 		}
 		e.preventDefault();
 		return false;
