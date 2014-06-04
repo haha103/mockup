@@ -117,7 +117,7 @@ function clickable_dots () {
 }
 
 function show_msg_logs_modal(collected_at) {
-	page_limit = 5;
+	page_limit = 10;
 	load_msg_logs_table(collected_at, page_limit, 1);
 	$("#details-modal").modal('show');
 	$("ul.pagination").on("click", "a", function(e) {
@@ -151,8 +151,8 @@ function load_msg_logs_table(collected_at, page_limit, page) {
 			var tbody = $("table#tbl-msg-details tbody");
 			tbody.html("");
 			for (var i = 0; i < m.length; ++i) {
-				console.log(m);
-				tbody.append($('<tr class="info">')
+				//console.log(m);
+				tbody.append($('<tr data-toggle="collapse" id="row' + i  + '" data-target="row' + i + '">')
 										 .append($('<td>')
 														 .append(i + (page - 1) * page_limit))
 										 .append($('<td>')
@@ -167,10 +167,15 @@ function load_msg_logs_table(collected_at, page_limit, page) {
 														 .append(m[i].last_event))
 										 .append($('<td>')
 														 .append(m[i].last_tcs)))
-					   .append($("<tr>")
+					   .append($('<tr class="collapse success" id="row' + i + '">')
 										 .append($('<td colspan="7">')
 														 .append(m[i].message.replace(/, /g, ",").replace(/,/g, ", "))));
 			}
+
+			$('table#tbl-msg-details tbody tr[data-toggle="collapse"]').click(function() {
+				var id = $(this).attr('id');
+				$(this).siblings('tr#' + id).toggleClass("in");
+			});
 
 			var p = $('ul.pagination');
 			p.html("");
