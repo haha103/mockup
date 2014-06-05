@@ -56,3 +56,11 @@
 table .collapse.in {
 	display: table-row;
 }
+
+.clickable.hover:hover {
+	text-decoration: underline;
+}
+
+.clickable:hover {
+	cursor: pointer;
+}

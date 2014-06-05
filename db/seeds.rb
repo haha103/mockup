@@ -12,6 +12,10 @@ require 'time'
 	MsgType.create(name: t)
 end
 
+r = TestRun.new
+r.name = "Test Run 1"
+r.save
+
 collected_at = Time.now
 
 ActiveSupport::JSON.decode(File.read('db/seeds/msgshowlog.json')).each do |j|
@@ -20,7 +24,15 @@ ActiveSupport::JSON.decode(File.read('db/seeds/msgshowlog.json')).each do |j|
 	m.count = j["count"].to_i
 	m.collected_at = collected_at
 	m.message = j["message"]
+	m.test_run = TestRun.find(1)
 	m.save
+
+	h = MsgShowLogHistory.new
+	h.count = m.count
+	h.collected_at = m.collected_at
+	h.msg_show_log = m
+	h.save
+	
 end
 
 f = File.open("db/seeds/dallas_msg.log", "r")

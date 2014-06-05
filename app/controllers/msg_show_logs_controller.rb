@@ -16,15 +16,14 @@ class MsgShowLogsController < ApplicationController
   # GET /msg_show_logs
   # GET /msg_show_logs.json
   def index
-		update_all if params["update"] == "1"
-    @msg_show_logs = MsgShowLog.where(collected_at: MsgShowLog.maximum(:collected_at)).order(count: :desc).paginate(:page => params[:page], :per_page => 20)
+		update_all(params[:test_run_id]) if params["update"] == "1"
+    @msg_show_logs = MsgShowLog.order(count: :desc).paginate(:page => params[:page], :per_page => 20)
   end
 
   # GET /msg_show_logs/1
   # GET /msg_show_logs/1.json
   def show
-		update_all if params["update"] == "1"
-		@single_msg_records = MsgShowLog.where(message: MsgShowLog.find(params[:id]).message).order(collected_at: :desc)
+		#@single_msg_records = MsgShowLog.where(message: MsgShowLog.find(params[:id]).message).order(collected_at: :desc)
   end
 
   # GET /msg_show_logs/new
@@ -88,48 +87,54 @@ class MsgShowLogsController < ApplicationController
     end
 
 		def update_single(id)
-			m = MsgShowLog.where(message: MsgShowLog.find(params[:id]).message).order(collected_at: :desc).first
-			collected_at = Time.now
-			m1 = MsgShowLog.new
-			m1.msg_type = m.msg_type
-			m1.count = m.count
-			m1.message = m.message
-			m1.collected_at = collected_at
-			# probability of remaining unchanged is 0.2
-			unless rand(5) == 0
-				m1.count += rand(50)
+			m = MsgShowLog.find(id)
+			if m
+				collected_at = Time.now
+				# probability of remaining unchanged is 0.2
+				unless rand(5) == 0
+					m.count += rand(50)
+				end
+				m.save
+				h = MsgShowLogHistory.new
+				h.count = m.count
+				h.collected_at = m.collected_at
+				h.msg_show_log = m
+				h.save
 			end
-			m1.save
 		end
 
-		def update_all
+		def update_all(test_run_id)
+			collected_at = Time.now
+			MsgShowLog.all.each do |m|
+				# probability of remaining unchanged is 0.2
+				unless rand(5) == 0
+					m.count += rand(50)
+				end
+				m.save
+				h = MsgShowLogHistory.new
+				h.count = m.count
+				h.collected_at = m.collected_at
+				h.msg_show_log = m
+				h.save
+			end
 			# probability of having new entries is 0.1
 			puts "update all ... "
 			t = MsgType.find(1)
 			if rand(10) == 0
-				srand
 				m = MsgShowLog.new
 				m.msg_type = t
 				m.count = 1
+				m.collected_at = collected_at
 				m.message = "Randomly added error message group #{MsgShowLog.count + 1}"
+				m.test_run = TestRun.find(test_run_id)
 				m.save
+				h = MsgShowLogHistory.new
+				h.count = m.count
+				h.collected_at = m.collected_at
+				h.msg_show_log = m
+				h.save
 			end
-			msg_show_logs = MsgShowLog.where(collected_at: MsgShowLog.maximum("collected_at"))
-			# update all counts
-			collected_at = Time.now
-			msg_show_logs.each do |m|
-				m1 = MsgShowLog.new
-				m1.msg_type = m.msg_type
-				m1.count = m.count
-				m1.message = m.message
-				m1.collected_at = collected_at
-				# probability of remaining unchanged is 0.2
-				unless rand(5) == 0
-					m1.count += rand(50)
-				end
-				m1.save
-			end
-
+			
 		end
 		
 end

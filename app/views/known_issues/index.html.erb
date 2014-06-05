@@ -1,0 +1,27 @@
+<h1>Listing known_issues</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @known_issues.each do |known_issue| %>
+      <tr>
+        <td><%= known_issue.name %></td>
+        <td><%= link_to 'Show', known_issue %></td>
+        <td><%= link_to 'Edit', edit_known_issue_path(known_issue) %></td>
+        <td><%= link_to 'Destroy', known_issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Known issue', new_known_issue_path %>

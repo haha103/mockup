@@ -1,6 +1,14 @@
 Mockup::Application.routes.draw do
 
 
+  resources :msg_show_log_histories
+
+  resources :test_runs
+
+  resources :known_issue_patterns
+
+  resources :known_issues
+
 	post 'msg_logs/search' => 'msg_logs#ajax_search'
 	
   resources :msg_logs

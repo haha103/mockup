@@ -9,7 +9,7 @@
 	</div>
 </div>
 <hr class="hr-condensed"/>
-<pre id="msg-group"><%= @single_msg_records.first.message %></pre>
+<pre id="msg-group"><%= @msg_show_log.message %></pre>
 
 <br/>
 
@@ -78,7 +78,7 @@
 				</div>
 			</div>
 			<div class="panel-body">
-				<div class="center-block" id="chart" data-count="<%= @single_msg_records.map { |r| r.count }.reverse.join(",") %>" datax="<%= @single_msg_records.map { |r| r.collected_at.localtime.strftime("%FT%T%:z") }.sort.join(",") %>" data-refresh-url="<%= msg_show_logs_ajax_get_increment_path %>">
+				<div class="center-block" id="chart" data-count="<%= @msg_show_log.msg_show_log_histories.map { |h| h.count }.join(",") %>" datax="<%= @msg_show_log.msg_show_log_histories.map { |h| h.collected_at.localtime.strftime("%FT%T%:z") }.sort.join(",") %>" data-refresh-url="<%= msg_show_logs_ajax_get_increment_path %>">
 							
 				</div>
 			</div>

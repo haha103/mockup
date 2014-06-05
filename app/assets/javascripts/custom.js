@@ -1,8 +1,35 @@
 $(document).on('ready page:load', function() {
-	$(".clickable").click(function () {
+	$(".clickable.redirect").click(function () {
 		window.document.location = $(this).attr("href");
 	});
 
+	var path = window.location.pathname;
+
+
+	if (/^\/msg_show_logs\/.*/.test(path)) {
+		generateChart();
+		clickable_dots();
+		searchResetBtnHandler();
+		searchGoBtnHandler();
+		$('.datetimepicker').datetimepicker();
+		auto_refresh_toggle_handlers();
+		alertCloseBtnHandler();
+		msgLogsFilterBtnHandler();
+	} else {
+		knwonIssueBtnHandler();
+	}
+	
+});
+
+function knwonIssueBtnHandler() {
+	$('.btn-known-issue-details').click(function(e) {
+		$('pre#known-issue-context').text($(this).parent().parent().find('td#full-message').text());
+		$('#known-issue-modal').modal('show');
+		e.preventDefault();
+	});
+}
+
+function generateChart() {
 	var data_count = ['Count'];
 	data_count = data_count.concat($("#chart").attr("data-count").split(","));
 	datax = $("#chart").attr("datax").split(",");
@@ -21,22 +48,7 @@ $(document).on('ready page:load', function() {
 			}
 		}
 	});
-
-	clickable_dots();
-
-	auto_refresh_toggle_handlers();
-
-	alertCloseBtnHandler();
-
-	searchResetBtnHandler();
-
-	searchGoBtnHandler();
-
-	msgLogsFilterBtnHandler();
-
-	$('.datetimepicker').datetimepicker();
-	
-});
+}
 
 function msgLogsFilterBtnHandler() {
 	$("button#filter-go").click(function(e) {

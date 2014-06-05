@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Count:</strong>
+  <%= @msg_show_log_history.count %>
+</p>
+
+<p>
+  <strong>Collected at:</strong>
+  <%= @msg_show_log_history.collected_at %>
+</p>
+
+<%= link_to 'Edit', edit_msg_show_log_history_path(@msg_show_log_history) %> |
+<%= link_to 'Back', msg_show_log_histories_path %>

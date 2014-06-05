@@ -1,0 +1,27 @@
+<h1>Listing known_issue_patterns</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @known_issue_patterns.each do |known_issue_pattern| %>
+      <tr>
+        <td><%= known_issue_pattern.content %></td>
+        <td><%= link_to 'Show', known_issue_pattern %></td>
+        <td><%= link_to 'Edit', edit_known_issue_pattern_path(known_issue_pattern) %></td>
+        <td><%= link_to 'Destroy', known_issue_pattern, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Known issue pattern', new_known_issue_pattern_path %>

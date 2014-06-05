@@ -1,0 +1,29 @@
+<h1>Listing msg_show_log_histories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Count</th>
+      <th>Collected at</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @msg_show_log_histories.each do |msg_show_log_history| %>
+      <tr>
+        <td><%= msg_show_log_history.count %></td>
+        <td><%= msg_show_log_history.collected_at %></td>
+        <td><%= link_to 'Show', msg_show_log_history %></td>
+        <td><%= link_to 'Edit', edit_msg_show_log_history_path(msg_show_log_history) %></td>
+        <td><%= link_to 'Destroy', msg_show_log_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Msg show log history', new_msg_show_log_history_path %>
