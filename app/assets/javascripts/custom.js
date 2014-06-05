@@ -17,9 +17,25 @@ $(document).on('ready page:load', function() {
 		msgLogsFilterBtnHandler();
 	} else {
 		knwonIssueBtnHandler();
+		createKnownIssueBtnHandler();
+		createKnownIssueGoBtnHandler();
 	}
 	
 });
+
+function createKnownIssueBtnHandler() {
+	$('button#create-known-issue').click(function(e) {
+		$('div#new-known-issue').removeClass("hidden");
+		e.preventDefault();
+	});
+}
+
+function createKnownIssueGoBtnHandler() {
+	$('button#create-known-issue-go').click(function(e) {
+		$('div#new-known-issue').addClass("hidden");
+		e.preventDefault();
+	});
+}
 
 function knwonIssueBtnHandler() {
 	$('.btn-known-issue-details').click(function(e) {

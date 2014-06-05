@@ -61,8 +61,29 @@
         <pre id="known-issue-context">
         </pre>
 				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list"></span> &nbsp;Add</button>
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> &nbsp;New</button>
+				<button type="button" class="btn btn-default" id="create-known-issue"><span class="glyphicon glyphicon-plus"></span> &nbsp;New</button>
         <hr class="hr-condensed"/>
+
+        <div class="hidden" id="new-known-issue">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4 class="panel-title">Create Known Issue</h4>
+						</div>
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="known_issue[name]">Name</label>
+                <input class="form-control" type="text" name="known_issue[name]" value=""/>
+							</div>
+							<div class="form-group">
+                <label for="known_issue[patterns]">Patterns</label>
+                <input class="form-control" type="text" name="known_issue[patterns]" value=""/>
+							</div>
+							<button type="button" class="btn btn-success btn-block" id="create-known-issue-go"><span class="glyphicon glyphicon-floppy-save"></span> &nbsp;Save</button>
+						</div>
+					</div>
+          <hr class="hr-condensed"/>
+				</div>
+				
 				<table class="table table-condensed table-hover" id="tbl-known-issue-details">
 					<thead>
 						<tr>
