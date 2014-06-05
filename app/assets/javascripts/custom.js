@@ -116,12 +116,34 @@ function clickable_dots () {
 		var tb_start_ts = $("input#start-ts");
 		var tb_end_ts = $("input#end-ts");
 
-		if (tb_start_ts.val() == "") {
+
+		var d = new Date(Date.parse(collected_at));
+		
+		if (tb_start_ts.val() == "" && tb_end_ts.val() == "") {
 			tb_start_ts.val(collected_at);
+			d3.select('circle.c3-shape-' + i).style('fill', 'red');
+		} else if (tb_start_ts.val() == "") {
+			var d2 = new Date(Date.parse(tb_end_ts.val()));
+			if (d < d2) {
+				tb_start_ts.val(collected_at);
+			} else {
+				tb_end_ts.val(collected_at);
+			}
 		} else if (tb_end_ts.val() == "") {
-			tb_end_ts.val(collected_at);
+			var d1 = new Date(Date.parse(tb_start_ts.val()));
+			if (d > d1) {
+				tb_end_ts.val(collected_at);
+				d3.select('circle.c3-shape-' + i).style('fill', 'red');
+			} else {
+				tb_start_ts.val(collected_at);
+				d3.selectAll('circle.c3-shape').style('fill', 'rgb(31, 119, 180)');
+				d3.select('circle.c3-shape-' + i).style('fill', 'red');
+			}
 		} else {
-			
+			d3.selectAll('circle.c3-shape').style('fill', 'rgb(31, 119, 180)');
+			d3.select('circle.c3-shape-' + i).style('fill', 'red');
+			tb_start_ts.val(collected_at);
+			tb_end_ts.val('');
 		}
 		//show_msg_logs_modal(collected_at);
 	});
@@ -273,6 +295,7 @@ function alertCloseBtnHandler() {
 function searchResetBtnHandler() {
 	$("#search-reset").click(function() {
 		$(this).closest(".panel").find("input").val('');
+		d3.selectAll('circle.c3-shape').style('fill', 'rgb(31, 119, 180)');
 	});
 }
 

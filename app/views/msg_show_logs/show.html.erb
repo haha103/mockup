@@ -78,7 +78,7 @@
 				</div>
 			</div>
 			<div class="panel-body">
-				<div class="center-block" id="chart" data-count="<%= @single_msg_records.map { |r| r.count }.reverse.join(",") %>" datax="<%= @single_msg_records.map { |r| r.collected_at.strftime("%Y-%m-%d_%H:%M:%S") }.sort.join(",") %>" data-refresh-url="<%= msg_show_logs_ajax_get_increment_path %>">
+				<div class="center-block" id="chart" data-count="<%= @single_msg_records.map { |r| r.count }.reverse.join(",") %>" datax="<%= @single_msg_records.map { |r| r.collected_at.localtime.strftime("%FT%T%:z") }.sort.join(",") %>" data-refresh-url="<%= msg_show_logs_ajax_get_increment_path %>">
 							
 				</div>
 			</div>
