@@ -5,7 +5,6 @@ $(document).on('ready page:load', function() {
 
 	var path = window.location.pathname;
 
-
 	if (/^\/msg_show_logs\/.*/.test(path)) {
 		generateChart();
 		clickable_dots();
@@ -19,9 +18,39 @@ $(document).on('ready page:load', function() {
 		knwonIssueBtnHandler();
 		createKnownIssueBtnHandler();
 		createKnownIssueGoBtnHandler();
+		addKnownIssueBtnHandler();
+		addKnownIssueGoBtnHandler();
 	}
 	
 });
+
+function addKnownIssueBtnHandler() {
+	$('button#add-known-issue').click(function(e) {
+		$('div#add-known-issue').removeClass("hidden");
+		$('select[name="existing-known-issues"]').empty();
+		
+		$.ajax({
+			url: "/known_issues.json",
+			type: 'GET',
+			success: function(d) {
+				console.log(d);
+				_.each(d, function(i) {
+					console.log(i);
+					$('select[name="existing-known-issues"]').append('<option>' + i.name + ' - ' + i.patterns + '</option>');
+				});
+			}
+		});
+		
+		e.preventDefault();
+	});
+}
+
+function addKnownIssueGoBtnHandler() {
+	$('button#add-known-issue-go').click(function(e) {
+		$('div#add-known-issue').addClass("hidden");
+		e.preventDefault();
+	});
+}
 
 function createKnownIssueBtnHandler() {
 	$('button#create-known-issue').click(function(e) {
@@ -32,6 +61,36 @@ function createKnownIssueBtnHandler() {
 
 function createKnownIssueGoBtnHandler() {
 	$('button#create-known-issue-go').click(function(e) {
+		var known_issue_name = $('input[name="known-issue-name"]').val();
+
+		if (known_issue_name == "") {
+			alert("Name cannot be empty!");
+			e.preventDefault();
+			return false;
+		}
+		
+		var url = "/known_issues";
+		var patterns = $('select[name="known-issue-patterns"]').val().join(',');
+		var msg_show_log_id = $('input[name="msg-show-log-id"]').val();
+
+		var data = {
+			name: known_issue_name,
+			patterns: patterns,
+			msg_show_log_id: msg_show_log_id
+		}
+
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: data,
+			success: function(d) {
+				console.log(d);
+				if (d.result == "ok" ) {
+					$('div#known-issue-saved-alert').text("Known issue '" + known_issue_name + "' saved!");
+					$('div#known-issue-saved-alert').fadeIn(800).delay(3000).fadeOut(800);
+				}
+			}
+		});
 		$('div#new-known-issue').addClass("hidden");
 		e.preventDefault();
 	});
@@ -39,7 +98,15 @@ function createKnownIssueGoBtnHandler() {
 
 function knwonIssueBtnHandler() {
 	$('.btn-known-issue-details').click(function(e) {
-		$('pre#known-issue-context').text($(this).parent().parent().find('td#full-message').text());
+		var message = $(this).parent().parent().find('td#full-message').text();
+		$('pre#known-issue-context').text(message);
+		var regexp = /.*(Expected: .*),\s*(Received: [^ ]+)\s*\((Cause: [^\)]*)\)\..*/;
+		var patterns = message.match(regexp).slice(1,4);
+		$('select[name="known-issue-patterns"]').empty();
+		_.each(patterns, function(p) {
+			$('select[name="known-issue-patterns"]').append('<option>' + p + '</option>')
+		});
+		$('input[name="msg-show-log-id"]').val($(this).attr('data-msg-show-log-id'));
 		$('#known-issue-modal').modal('show');
 		e.preventDefault();
 	});

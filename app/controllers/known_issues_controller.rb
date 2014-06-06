@@ -5,6 +5,16 @@ class KnownIssuesController < ApplicationController
   # GET /known_issues.json
   def index
     @known_issues = KnownIssue.all
+		d = [ ]
+		@known_issues.each do |i|
+			d1 = { }
+			d1[:name] = i.name
+			d1[:patterns] = i.known_issue_patterns.map { |p| p.content }.join(",")
+			d << d1
+		end
+		respond_to do |f|
+			f.json { render :json => d }
+		end
   end
 
   # GET /known_issues/1
@@ -24,14 +34,35 @@ class KnownIssuesController < ApplicationController
   # POST /known_issues
   # POST /known_issues.json
   def create
-    @known_issue = KnownIssue.new(known_issue_params)
+
+		name = params[:name]
+		patterns = params[:patterns].split(',')
+		msg_show_log_id = params[:msg_show_log_id]
+		puts "#{patterns}"
+		pattern_objs = []
+		patterns.each do |p|
+			tmp = KnownIssuePattern.where(:content => p).first
+			if tmp
+				pattern_objs << tmp
+			else
+				newp = KnownIssuePattern.new
+				newp.content = p
+				newp.save
+				pattern_objs << newp
+			end
+		end
+
+		@known_issue = KnownIssue.new
+		@known_issue.name = name
+		@known_issue.known_issue_patterns = pattern_objs
+		@known_issue.msg_show_logs << MsgShowLog.find(msg_show_log_id)
 
     respond_to do |format|
       if @known_issue.save
-        format.html { redirect_to @known_issue, notice: 'Known issue was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @known_issue }
+				d = { :result => "ok" }
+				puts "#{d.inspect}"
+        format.json { render :json => d }
       else
-        format.html { render action: 'new' }
         format.json { render json: @known_issue.errors, status: :unprocessable_entity }
       end
     end

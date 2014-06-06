@@ -29,13 +29,13 @@
       <tr>
         <td><%= m.msg_type.name %></td>
 				<td><%= m.count %></td>
-				<td id="full-message" class="clickable redirect hover <%= color %>" href="<%= msg_show_log_path(m) %>"><%= m.message.gsub(/\s+,\s+/, ',').gsub(/,/, ', ') %></td>
+				<td id="full-message" class="clickable redirect hover <%= color %>" href="<%= msg_show_log_path(m) %>"><%= m.message.gsub(/\s*,\s*/, ',').gsub(/,/, ', ') %></td>
         <td>
 					<span class="glyphicon glyphicon-star-empty"></span>
 				</td>
         <td>xxxxxxxxxxxx, xxxxxx, xxxxx, xxxx</td>
         <td>
-          <button class="btn btn-success btn-xs btn-known-issue-details">Details</button>
+          <button class="btn btn-success btn-xs btn-known-issue-details" data-msg-show-log-id="<%= m.id %>">Details</button>
 				</td>
       </tr>
 		<% end %>
@@ -58,11 +58,30 @@
         <h4 class="modal-title">Known Issue Details</h4>
       </div>
       <div class="modal-body">
+        <input type="hidden" name="msg-show-log-id" value=""/>
         <pre id="known-issue-context">
         </pre>
-				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-list"></span> &nbsp;Add</button>
+				<button type="button" class="btn btn-default" id="add-known-issue"><span class="glyphicon glyphicon-list"></span> &nbsp;Add</button>
 				<button type="button" class="btn btn-default" id="create-known-issue"><span class="glyphicon glyphicon-plus"></span> &nbsp;New</button>
         <hr class="hr-condensed"/>
+        <div class="alert alert-success" id="known-issue-added-alert" hidden></div>
+				<div class="alert alert-success" id="known-issue-saved-alert" hidden></div>
+
+				<div class="hidden" id="add-known-issue">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h4 class="panel-title">Add Existing Known Issue</h4>
+						</div>
+            <div class="panel-body">
+              <div class="form-group">
+								<select class="form-control" name="existing-known-issues">
+                </select>
+							</div>
+							<button type="button" class="btn btn-success btn-block" id="add-known-issue-go"><span class="glyphicon glyphicon-floppy-save"></span> &nbsp;Save</button>
+						</div>
+					</div>
+          <hr class="hr-condensed"/>
+				</div>
 
         <div class="hidden" id="new-known-issue">
           <div class="panel panel-primary">
@@ -71,12 +90,13 @@
 						</div>
             <div class="panel-body">
               <div class="form-group">
-                <label for="known_issue[name]">Name</label>
-                <input class="form-control" type="text" name="known_issue[name]" value=""/>
+                <label for="known-issue-name">Name</label>
+                <input class="form-control" type="text" name="known-issue-name" value=""/>
 							</div>
-							<div class="form-group">
-                <label for="known_issue[patterns]">Patterns</label>
-                <input class="form-control" type="text" name="known_issue[patterns]" value=""/>
+							<div class="form-group" id="known-issue-patterns">
+                <label for="known-issue-patterns">Patterns</label>
+                <select multiple class="form-control" name="known-issue-patterns" style="padding-top:12px; padding-bottom:12px;">
+                </select>
 							</div>
 							<button type="button" class="btn btn-success btn-block" id="create-known-issue-go"><span class="glyphicon glyphicon-floppy-save"></span> &nbsp;Save</button>
 						</div>
