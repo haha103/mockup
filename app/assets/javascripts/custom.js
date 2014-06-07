@@ -21,8 +21,16 @@ $(document).on('ready page:load', function() {
 		addKnownIssueBtnHandler();
 		addKnownIssueGoBtnHandler();
 	}
+
+	panelCloseBtnHander();
 	
 });
+
+function panelCloseBtnHander() {
+	$('.panel-heading > button.panel-close').click(function() {
+		$(this).parents('.panel').toggleClass('hidden');
+	});
+}
 
 function addKnownIssueBtnHandler() {
 	$('button#add-known-issue').click(function(e) {
