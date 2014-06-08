@@ -44,7 +44,7 @@ function addKnownIssueBtnHandler() {
 				console.log(d);
 				_.each(d, function(i) {
 					console.log(i);
-					$('select[name="existing-known-issues"]').append('<option>' + i.name + ' - ' + i.patterns + '</option>');
+					$('select[name="existing-known-issues"]').append($('<option>').val(i.id).html(i.name + ' - ' + i.patterns));
 				});
 			}
 		});
@@ -53,9 +53,55 @@ function addKnownIssueBtnHandler() {
 	});
 }
 
+function loadKnownIssueTable() {
+	id = $('input[name="msg-show-log-id"]').val();
+	$.ajax({
+		url: "/msg_show_logs/ajax_get_known_issues?msg_show_log_id=" + id,
+		type: 'GET',
+		success: function(d) {
+			console.log(d);
+			$('table#tbl-known-issue-details tbody').empty();
+			for (var i = 0; i < d.length; i++) {
+				console.log(d[i]);
+				$('table#tbl-known-issue-details tbody')
+					.append($('<tr>')
+									.append($('<td>').html(i))
+									.append($('<td>').html(d[i].name))
+									.append($('<td>').html(d[i].patterns))
+									.append($('<td>')
+													.append($('<button>')
+																	.attr('class', 'btn btn-xs btn-danger btn-remove-known-issue')
+																	.attr('data-known-issue-id', d[i].id)
+																	.append('<span class="glyphicon glyphicon-trash"></span>'))));
+			}
+		}
+	});
+}
+
 function addKnownIssueGoBtnHandler() {
 	$('button#add-known-issue-go').click(function(e) {
 		$('div#add-known-issue').addClass("hidden");
+		var data = {
+			known_issue_id : $('select[name="existing-known-issues"] option:selected').val(),
+			msg_show_log_id : $('input[name="msg-show-log-id"]').val()
+		}
+
+		var known_issue_name = $('select[name="existing-known-issues"] option:selected').text();
+
+		$.ajax({
+			url: '/msg_show_logs/ajax_add_known_issues',
+			type: 'POST',
+			data: data,
+			success: function(d) {
+				console.log(d);
+				if (d.result == "ok" ) {
+					$('div#known-issue-added-alert').text("Known issue '" + known_issue_name + "' added!");
+					$('div#known-issue-added-alert').fadeIn(800).delay(3000).fadeOut(800);
+					loadKnownIssueTable();
+				}
+			}
+		});
+		
 		e.preventDefault();
 	});
 }
@@ -96,6 +142,7 @@ function createKnownIssueGoBtnHandler() {
 				if (d.result == "ok" ) {
 					$('div#known-issue-saved-alert').text("Known issue '" + known_issue_name + "' saved!");
 					$('div#known-issue-saved-alert').fadeIn(800).delay(3000).fadeOut(800);
+					loadKnownIssueTable();
 				}
 			}
 		});
@@ -115,6 +162,7 @@ function knwonIssueBtnHandler() {
 			$('select[name="known-issue-patterns"]').append('<option>' + p + '</option>')
 		});
 		$('input[name="msg-show-log-id"]').val($(this).attr('data-msg-show-log-id'));
+		loadKnownIssueTable();
 		$('#known-issue-modal').modal('show');
 		e.preventDefault();
 	});

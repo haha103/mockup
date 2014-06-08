@@ -8,6 +8,7 @@ class KnownIssuesController < ApplicationController
 		d = [ ]
 		@known_issues.each do |i|
 			d1 = { }
+			d1[:id] = i.id
 			d1[:name] = i.name
 			d1[:patterns] = i.known_issue_patterns.map { |p| p.content }.join(",")
 			d << d1

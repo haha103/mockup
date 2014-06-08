@@ -3,6 +3,34 @@ require 'json'
 class MsgShowLogsController < ApplicationController
   before_action :set_msg_show_log, only: [:show, :edit, :update, :destroy]
 
+	def ajax_get_known_issues
+		msg_show_log_id = params[:msg_show_log_id]
+		msg_show_log = MsgShowLog.find(msg_show_log_id)
+		d = [ ]
+		msg_show_log.known_issues.each do |i|
+			d1 = { }
+			d1[:id] = i.id
+			d1[:name] = i.name
+			d1[:patterns] = i.known_issue_patterns.map { |p| p.content }.join(",")
+			d << d1
+		end
+		render json: d
+	end
+
+	def ajax_add_known_issues
+		msg_show_log_id = params[:msg_show_log_id].to_i
+		known_issue_id = params[:known_issue_id].to_i
+		msg_show_log = MsgShowLog.find(msg_show_log_id)
+		msg_show_log.known_issues << KnownIssue.find(known_issue_id)
+		d = { }
+		if msg_show_log.save
+			d[:result] = "ok"
+		else
+			d[:result] = "nok"
+		end
+		render json: d
+	end
+
 	def ajax_get_increment
 		d = {
 			increment: rand(50),

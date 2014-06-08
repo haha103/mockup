@@ -14,6 +14,8 @@ Mockup::Application.routes.draw do
   resources :msg_logs
 
 	get 'msg_show_logs/ajax_get_increment' => 'msg_show_logs#ajax_get_increment'
+	get 'msg_show_logs/ajax_get_known_issues' => 'msg_show_logs#ajax_get_known_issues'
+	post 'msg_show_logs/ajax_add_known_issues' => 'msg_show_logs#ajax_add_known_issues'
 	
   resources :msg_show_logs
 

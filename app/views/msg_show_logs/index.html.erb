@@ -20,7 +20,7 @@
       <th style="width:60px;">Type</th>
       <th style="width:60px;">Count</th>
       <th>Message</th>
-      <th colspan="3">Known Issue</th>
+      <th colspan="3">Known Issues</th>
     </tr>
   </thead>
   <tbody>
@@ -31,11 +31,16 @@
 				<td><%= m.count %></td>
 				<td id="full-message" class="clickable redirect hover <%= color %>" href="<%= msg_show_log_path(m) %>"><%= m.message.gsub(/\s*,\s*/, ',').gsub(/,/, ', ') %></td>
         <td>
-					<span class="glyphicon glyphicon-star-empty"></span>
+					<% icon_class = m.known_issues.empty? ? "glyphicon-star-empty" : "glyphicon-star" %>
+					<span class="glyphicon <%= icon_class %>"></span>
 				</td>
-        <td>xxxxxxxxxxxx, xxxxxx, xxxxx, xxxx</td>
         <td>
-          <button class="btn btn-success btn-xs btn-known-issue-details" data-msg-show-log-id="<%= m.id %>">Details</button>
+					<% m.known_issues.each do |i| %>
+            <span class="label label-warning"><%= i.name %></span>
+					<% end %>
+				</td>
+        <td>
+          <button class="btn btn-default btn-xs btn-known-issue-details" data-msg-show-log-id="<%= m.id %>">Details</button>
 				</td>
       </tr>
 		<% end %>
@@ -105,8 +110,8 @@
 						<tr>
 							<th>#</th>
 							<th>Name</th>
-							<th>Patterns</th>
-              <th></th>
+							<th style="width:70%;">Patterns</th>
+              <th style="width:50px;"></th>
 						</tr>
 					</thead>
 					<tbody>
