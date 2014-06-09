@@ -10,6 +10,10 @@ class MsgLogsController < ApplicationController
 		page = params[:page].to_i
 		page_limit = params[:page_limit].to_i
 		filter = params[:filter]
+		orderby = params[:orderby]
+		if !orderby || orderby.empty?
+			orderby = "recorded_at"
+		end
 		puts "haha #{filter.inspect}"
 		detailed_messages = []
 
@@ -43,7 +47,7 @@ class MsgLogsController < ApplicationController
 		
 		total_count = MsgLog.where(condition, *values).count
 		
-		msg_logs = MsgLog.where(condition, *values).limit(page_limit).offset((page - 1) * page_limit)
+		msg_logs = MsgLog.where(condition, *values).limit(page_limit).offset((page - 1) * page_limit).order(orderby)
 
 		msg_logs.each do |l|			
 			detailed_message = {}
