@@ -249,6 +249,37 @@ function knwonIssueBtnHandler() {
 	});
 }
 
+function SVG(tag)
+{
+   return document.createElementNS('http://www.w3.org/2000/svg', tag);
+}
+
+function addSvgLinearGradFiller() {
+
+	var svg_defs = $('svg defs');
+	$(SVG('linearGradient'))
+		.attr('id', 'grad1')
+		.attr('x1', '100%').attr('x2', '0%').attr('y1', '0%').attr('y2', '0%')
+		.append($(SVG('stop'))
+						.attr('offset', '50%')
+						.attr('style', 'stop-color: red'))
+		.append($(SVG('stop'))
+						.attr('offset', '50%')
+						.attr('style', 'stop-color: transparent'))
+		.appendTo(svg_defs);
+	$(SVG('linearGradient'))
+		.attr('id', 'grad2')
+		.attr('x1', '100%').attr('x2', '0%').attr('y1', '0%').attr('y2', '0%')
+		.append($(SVG('stop'))
+						.attr('offset', '50%')
+						.attr('style', 'stop-color: transparent'))
+		.append($(SVG('stop'))
+						.attr('offset', '50%')
+						.attr('style', 'stop-color: red'))
+		.appendTo(svg_defs);
+	
+}
+
 function generateChart() {
 	var data_count = ['Count'];
 	data_count = data_count.concat($("#chart").attr("data-count").split(","));
@@ -268,9 +299,8 @@ function generateChart() {
 			}
 		}
 	});
-
-	$('svg defs').append('<linearGradient id="grad1"><stop offset="50%"  stop-color="transparent"/><stop offset="50%" stop-color="red"/></linearGradient>');
-	$('svg defs').append('<linearGradient id="grad2"><stop offset="50%"  stop-color="red"/><stop offset="50%" stop-color="transparent"/></linearGradient>');
+	
+	addSvgLinearGradFiller();
 }
 
 function msgLogsFilterBtnHandler() {
@@ -331,8 +361,7 @@ function update_chart (data) {
 			}
 		}
 	});
-	$('svg defs').append('<linearGradient id="grad1"><stop offset="50%"  stop-color="transparent"/><stop offset="50%" stop-color="red"/></linearGradient>');
-	$('svg defs').append('<linearGradient id="grad2"><stop offset="50%"  stop-color="red"/><stop offset="50%" stop-color="transparent"/></linearGradient>');
+	addSvgLinearGradFiller();
 	
 	$("#chart").attr("data-count", $("#chart").attr("data-count") + "," + (parseInt(data_count[data_count.length - 1]) + data.increment));
 	$("#chart").attr("datax", $("#chart").attr("datax") + "," + data.collected_at);
@@ -364,7 +393,9 @@ function clickable_dots () {
 		var d = new Date(Date.parse(collected_at));
 		
 		if (tb_start_ts.val() == "" && tb_end_ts.val() == "") {
+			$('rect.c3-event-rect').removeAttr('fill').removeAttr('style');
 			tb_start_ts.val(collected_at);
+			tb_start_ts.attr('data-dot-index', i);
 			d3.select('circle.c3-shape-' + i).style('fill', 'red');
 		} else if (tb_start_ts.val() == "") {
 			var d2 = new Date(Date.parse(tb_end_ts.val()));
@@ -378,15 +409,28 @@ function clickable_dots () {
 			if (d > d1) {
 				tb_end_ts.val(collected_at);
 				d3.select('circle.c3-shape-' + i).style('fill', 'red');
-				//$(this).fill('url(#grad2)');
+
+				// start dot
+				var start_idx = parseInt(tb_start_ts.attr('data-dot-index'));
+				$('rect.c3-event-rect-' + start_idx).attr('fill', 'url(#grad1)').attr('style', 'fill-opacity:50%;');
+				// in between
+				for (var ii = start_idx + 1; ii < i; ++ii) {
+					$('rect.c3-event-rect-' + ii).attr('fill', 'red').attr('style', 'fill-opacity:50%;');
+				}
+				// end dot
+				$(this).attr('fill', 'url(#grad2)').attr('style', 'fill-opacity:50%;');
 			} else {
+				$('rect.c3-event-rect').removeAttr('fill').removeAttr('style');
 				tb_start_ts.val(collected_at);
+				tb_start_ts.attr('data-dot-index', i);
 				d3.selectAll('circle.c3-shape').style('fill', 'rgb(31, 119, 180)');
 				d3.select('circle.c3-shape-' + i).style('fill', 'red');
 			}
 		} else {
+			$('rect.c3-event-rect').removeAttr('fill').removeAttr('style');
 			d3.selectAll('circle.c3-shape').style('fill', 'rgb(31, 119, 180)');
 			d3.select('circle.c3-shape-' + i).style('fill', 'red');
+			tb_start_ts.attr('data-dot-index', i);
 			tb_start_ts.val(collected_at);
 			tb_end_ts.val('');
 		}
