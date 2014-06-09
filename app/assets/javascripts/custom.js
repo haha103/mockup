@@ -268,6 +268,9 @@ function generateChart() {
 			}
 		}
 	});
+
+	$('svg defs').append('<linearGradient id="grad1"><stop offset="50%"  stop-color="transparent"/><stop offset="50%" stop-color="red"/></linearGradient>');
+	$('svg defs').append('<linearGradient id="grad2"><stop offset="50%"  stop-color="red"/><stop offset="50%" stop-color="transparent"/></linearGradient>');
 }
 
 function msgLogsFilterBtnHandler() {
@@ -328,6 +331,9 @@ function update_chart (data) {
 			}
 		}
 	});
+	$('svg defs').append('<linearGradient id="grad1"><stop offset="50%"  stop-color="transparent"/><stop offset="50%" stop-color="red"/></linearGradient>');
+	$('svg defs').append('<linearGradient id="grad2"><stop offset="50%"  stop-color="red"/><stop offset="50%" stop-color="transparent"/></linearGradient>');
+	
 	$("#chart").attr("data-count", $("#chart").attr("data-count") + "," + (parseInt(data_count[data_count.length - 1]) + data.increment));
 	$("#chart").attr("datax", $("#chart").attr("datax") + "," + data.collected_at);
 	clickable_dots();
@@ -347,6 +353,7 @@ function ajax_refresh_graph () {
 
 function clickable_dots () {
 	d3.selectAll("rect.c3-event-rect").on("click", function (d, i) {
+		
 		collected_at = $("#chart").attr("datax").split(",")[i];
 		console.log("collected_at: " + collected_at);
 
@@ -371,6 +378,7 @@ function clickable_dots () {
 			if (d > d1) {
 				tb_end_ts.val(collected_at);
 				d3.select('circle.c3-shape-' + i).style('fill', 'red');
+				//$(this).fill('url(#grad2)');
 			} else {
 				tb_start_ts.val(collected_at);
 				d3.selectAll('circle.c3-shape').style('fill', 'rgb(31, 119, 180)');
