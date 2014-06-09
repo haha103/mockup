@@ -65,7 +65,7 @@
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-md-6">
-						<h4 class="panel-title-btn-sm-align"><span class="glyphicon glyphicon-signal"></span>
+						<h4 class="panel-title-btn-sm-align"><span class="glyphicon glyphicon-stats"></span>
 							&nbsp;Trend</h4>
 					</div>
 					<div class="col-md-6 btn-parent">
@@ -107,6 +107,7 @@
 							<input type="text" class="form-control" id="filter-content" placeholder="Filter results ...">
 							<span class="input-group-btn">
 								<button class="btn btn-default" id="filter-go" type="button">Go!</button>
+								<button class="btn btn-default" id="filter-advanced" type="button"><span class="glyphicon glyphicon-wrench"></span></button>
 							</span>
 						</div>
 					</div>
@@ -118,6 +119,52 @@
 				</div>
 
         <br/>
+
+        <div class="panel panel-primary hidden" id="filter-advanced">
+          <div class="panel-heading">
+						<button type="button" class="close panel-close h4-align">&times;</button>
+						<h4 class="panel-title"><span class="glyphicon glyphicon-search"></span>&nbsp;Advanced Search</h4>
+					</div>
+          <div class="panel-body">
+            <div class="form">
+							<div class="form-group">
+								<label for="" class="control-label">MSID Range</label>
+								<div class="row">
+                  <div class="col-md-6 col-md-rcompact-5">
+                    <div class="input-group">
+                      <span class="input-group-addon">From</span>
+											<input class="form-control" type="text" name="msid-from" value=""/>
+										</div>
+									</div>
+                  <div class="col-md-6 col-md-lcompact-5">
+										<div class="input-group">
+                      <span class="input-group-addon">To</span>
+											<input class="form-control" type="text" name="msid-to" value=""/>
+										</div>
+									</div>
+                </div>
+							</div>
+							<div class="form-group">
+								<label for="" class="control-label">IMSI Range</label>
+								<div class="row">
+                  <div class="col-md-6 col-md-rcompact-5">
+                    <div class="input-group">
+                      <span class="input-group-addon">From</span>
+											<input class="form-control" type="text" name="imsi-from" value=""/>
+										</div>
+									</div>
+                  <div class="col-md-6 col-md-lcompact-5">
+										<div class="input-group">
+                      <span class="input-group-addon">To</span>
+											<input class="form-control" type="text" name="imsi-to" value=""/>
+										</div>
+									</div>
+                </div>
+							</div>
+							<button id="filter-advanced-go" class="btn btn-success btn-block">Go!</button>
+						</div>
+					</div>
+				</div>
 
 				<table class="table table-condensed table-bordered table-hover" id="tbl-msg-details">
 					<thead>

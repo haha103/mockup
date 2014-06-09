@@ -20,27 +20,34 @@
       <th style="width:60px;">Type</th>
       <th style="width:60px;">Count</th>
       <th>Message</th>
-      <th colspan="3">Known Issues</th>
+      <th colspan="2">Known Issues</th>
     </tr>
   </thead>
   <tbody>
+		<% i = 0 %>
 		<% @msg_show_logs.each do |m| %>
+			<% i += 1 %>
 			<% color = m.count >= 4000 ? "danger" : (m.count >= 3000 ? "warning" : "") %>
       <tr>
         <td><%= m.msg_type.name %></td>
 				<td><%= m.count %></td>
 				<td id="full-message" class="clickable redirect hover <%= color %>" href="<%= msg_show_log_path(m) %>"><%= m.message.gsub(/\s*,\s*/, ',').gsub(/,/, ', ') %></td>
-        <td>
+        <td style="width:30px;">
 					<% icon_class = m.known_issues.empty? ? "glyphicon-star-empty" : "glyphicon-star" %>
-					<span class="glyphicon <%= icon_class %>"></span>
+					<span class="glyphicon <%= icon_class %> clickable" data-toggle="collapse" data-target="row<%= i %>" id="row<%= i %>"></span>
 				</td>
         <td>
+          <button class="btn btn-default btn-xs btn-known-issue-details" data-msg-show-log-id="<%= m.id %>"><span class="glyphicon glyphicon-list-alt"></span>
+ &nbsp;Details</button>
+				</td>
+      </tr>
+      <tr class="collapse success" id="row<%= i %>">
+        <td></td>
+        <td></td>
+				<td colspan="3">
 					<% m.known_issues.each do |i| %>
 						<span class="label label-warning"><%= i.name %></span>
 					<% end %>
-				</td>
-        <td>
-          <button class="btn btn-default btn-xs btn-known-issue-details" data-msg-show-log-id="<%= m.id %>">Details</button>
 				</td>
       </tr>
 		<% end %>

@@ -10,13 +10,40 @@ class MsgLogsController < ApplicationController
 		page = params[:page].to_i
 		page_limit = params[:page_limit].to_i
 		filter = params[:filter]
+		puts "haha #{filter.inspect}"
 		detailed_messages = []
 
 		pattern = message.gsub("#", "%").gsub(/\s+/, ' ')
+
+		condition = "message LIKE ? AND recorded_at < ?"
+		values = [pattern, collected_at]
+
+		if filter
+			if filter["substring"] && !filter["substring"].empty?
+				condition << " AND message LIKE ?"
+				values << "%#{filter["substring"]}%"
+			end
+			if filter["msid_from"] && !filter["msid_from"].empty?
+				condition << " AND msid::bigint >= ?"
+				values << filter["msid_from"]
+			end
+			if filter["msid_to"] && !filter["msid_to"].empty?
+				condition << " AND msid::bigint <= ?"
+				values << filter["msid_to"]
+			end
+			if filter["imsi_from"] && !filter["imsi_from"].empty?
+				condition << " AND imsi::bigint >= ?"
+				values << filter["imsi_from"]
+			end
+			if filter["imsi_to"] && !filter["imsi_to"].empty?
+				condition << " AND imsi::bigint <= ?"
+				values << filter["imsi_to"]
+			end
+		end
 		
-		total_count = MsgLog.where("message LIKE ? AND message LIKE ? AND recorded_at < ?", pattern, "%#{filter}%", collected_at).count
+		total_count = MsgLog.where(condition, *values).count
 		
-		msg_logs = MsgLog.where("message LIKE ? AND message LIKE ? AND recorded_at < ?", pattern, "%#{filter}%", collected_at).limit(page_limit).offset((page - 1) * page_limit)
+		msg_logs = MsgLog.where(condition, *values).limit(page_limit).offset((page - 1) * page_limit)
 
 		msg_logs.each do |l|			
 			detailed_message = {}
