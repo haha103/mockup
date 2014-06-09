@@ -36,7 +36,7 @@
 				</td>
         <td>
 					<% m.known_issues.each do |i| %>
-            <span class="label label-warning"><%= i.name %></span>
+						<span class="label label-warning"><%= i.name %></span>
 					<% end %>
 				</td>
         <td>
@@ -71,6 +71,7 @@
         <hr class="hr-condensed"/>
         <div class="alert alert-success" id="known-issue-added-alert" hidden></div>
 				<div class="alert alert-success" id="known-issue-saved-alert" hidden></div>
+				<div class="alert alert-success" id="known-issue-removed-alert" hidden></div>
 
         <div class="panel panel-primary hidden" id="add-known-issue">
           <div class="panel-heading">

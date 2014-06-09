@@ -20,6 +20,7 @@ $(document).on('ready page:load', function() {
 		createKnownIssueGoBtnHandler();
 		addKnownIssueBtnHandler();
 		addKnownIssueGoBtnHandler();
+		removeKnownIssueBtnHandler();
 	}
 
 	panelCloseBtnHander();
@@ -72,9 +73,36 @@ function loadKnownIssueTable() {
 													.append($('<button>')
 																	.attr('class', 'btn btn-xs btn-danger btn-remove-known-issue')
 																	.attr('data-known-issue-id', d[i].id)
+																	.attr('data-known-issue-name', d[i].name)
 																	.append('<span class="glyphicon glyphicon-trash"></span>'))));
 			}
 		}
+	});
+}
+
+function removeKnownIssueBtnHandler() {
+	$("table#tbl-known-issue-details").on('click', 'button.btn-remove-known-issue', function() {
+		var data = {
+			known_issue_id : $(this).attr('data-known-issue-id'),
+			msg_show_log_id : $('input[name="msg-show-log-id"]').val()
+		};
+
+		var known_issue_name = $(this).attr('data-known-issue-name');
+
+		$.ajax({
+			url: '/msg_show_logs/ajax_remove_known_issues',
+			type: 'POST',
+			data: data,
+			success: function(d) {
+				console.log(d);
+				if (d.result == "ok" ) {
+					$('div#known-issue-removed-alert').text("Known issue '" + known_issue_name + "' removed!");
+					$('div#known-issue-removed-alert').fadeIn(800).delay(3000).fadeOut(800);
+					loadKnownIssueTable();
+				}
+			}
+		});
+		
 	});
 }
 
