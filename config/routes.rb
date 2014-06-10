@@ -1,6 +1,8 @@
 Mockup::Application.routes.draw do
 
 
+  resources :welcomes
+
   resources :msg_show_log_histories
 
   resources :test_runs
@@ -28,7 +30,7 @@ Mockup::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'welcome#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
