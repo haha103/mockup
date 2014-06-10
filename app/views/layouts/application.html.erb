@@ -19,36 +19,49 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="<%= welcomes_path %>">Dallas</a>
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a href="#" class='dropdown-toggle' data-toggle="dropdown">
-						Configuration
-						<span class="caret"></span>
-					</a>
-          <ul class="dropdown-menu">
-            <li><%= link_to 'Mobile', 'http://10.121.122.71:4567/mobile' %></li>
-						<li><%= link_to 'Traffic Disturbance', '#' %></li>
-						<li><%= link_to 'System', '#' %></li>
-						<li><%= link_to 'Traffic Model', '#' %></li>
-						<li><%= link_to 'Environment', '#' %></li>
-						<li><%= link_to 'GSM Radio Access Network', '#' %></li>
-						<li><%= link_to 'WCDMA Radio Access Network', '#' %></li>
-						<li><%= link_to 'MME Core Network', '#' %></li>
-						<li><%= link_to 'SGSN Core Network', '#' %></li>
-						<li><%= link_to 'S4-SGSN Core Network', '#' %></li>
-						<li><%= link_to 'SGW Core Network', '#' %></li>
-						<li><%= link_to 'S2A TWAN Network', '#' %></li>
-						<li><%= link_to 'MAG Non-3GPP Network', '#' %></li>
-						<li><%= link_to 'EMBMS EPG Network', '#' %></li>
-						<li><%= link_to 'PCRF', '#' %></li>
-						<li><%= link_to 'ICAP', '#' %></li>
-						<li><%= link_to 'Backbone Network', '#' %></li>
-						<li><%= link_to 'PCRF', '#' %></li>
-          </ul>
-				</li>
-        <li><%= link_to 'Monitoring', msg_show_logs_path %></li>
-      </ul>
     </div>
+		<ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a href="#" class='dropdown-toggle' data-toggle="dropdown">
+					Configuration
+					<span class="caret"></span>
+				</a>
+        <ul class="dropdown-menu">
+          <li><%= link_to 'Mobile', 'http://10.121.122.71:4567/mobile' %></li>
+					<li><%= link_to 'Traffic Disturbance', '#' %></li>
+					<li><%= link_to 'System', '#' %></li>
+					<li><%= link_to 'Traffic Model', '#' %></li>
+					<li><%= link_to 'Environment', '#' %></li>
+					<li><%= link_to 'GSM Radio Access Network', '#' %></li>
+					<li><%= link_to 'WCDMA Radio Access Network', '#' %></li>
+					<li><%= link_to 'MME Core Network', '#' %></li>
+					<li><%= link_to 'SGSN Core Network', '#' %></li>
+					<li><%= link_to 'S4-SGSN Core Network', '#' %></li>
+					<li><%= link_to 'SGW Core Network', '#' %></li>
+					<li><%= link_to 'S2A TWAN Network', '#' %></li>
+					<li><%= link_to 'MAG Non-3GPP Network', '#' %></li>
+					<li><%= link_to 'EMBMS EPG Network', '#' %></li>
+					<li><%= link_to 'PCRF', '#' %></li>
+					<li><%= link_to 'ICAP', '#' %></li>
+					<li><%= link_to 'Backbone Network', '#' %></li>
+					<li><%= link_to 'PCRF', '#' %></li>
+        </ul>
+			</li>
+			<li class="dropdown">
+        <a href="#" class='dropdown-toggle' data-toggle="dropdown">
+					Monitoring
+					<span class="caret"></span>
+				</a>
+        <ul class="dropdown-menu">
+					<li><%= link_to 'Message Counters (<code>lts_msgshow</code>)'.html_safe, msg_show_logs_path %></li>
+          <li><%= link_to 'PM Logs', '#' %></li>
+					<li><%= link_to '...', '#' %></li>
+        </ul>
+			</li>
+    </ul>
+		<ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-question-sign"></span> Help</a></li>
+    </ul>
   </div><!-- /.container-fluid -->
 </nav>
 
