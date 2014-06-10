@@ -15,7 +15,7 @@ $(document).on('ready page:load', function() {
 		searchAdvancedGoBtnHandler();
 		sortableColumnsHandler();
 	} else {
-		updateMsgShowLogsTblBtnHandler();
+		autoRefreshMsgShowLogsHandlers();
 		goToMsgDetailsLinkHandler();
 		knownIssueBtnHandler();
 		createKnownIssueBtnHandler();
@@ -36,13 +36,10 @@ function goToMsgDetailsLinkHandler() {
 	});
 }
 
-function updateMsgShowLogsTblBtnHandler() {
-	$('button#btn-update-msg-show-logs').click(function(e) {
-		var test_run_id = $(this).attr('data-test-run-id');
-		var url = '/msg_show_logs/indextbl?test_run_id=' + test_run_id;
-		$('div.refreshable').load(url);
-		e.preventDefault();
-	});
+function updateMsgShowLogsTbl() {
+	var test_run_id = $('div.refreshable').attr('data-test-run-id');
+	var url = '/msg_show_logs/indextbl?test_run_id=' + test_run_id;
+	$('div.refreshable').load(url);
 }
 
 function sortableColumnsHandler() {
@@ -350,6 +347,28 @@ function auto_refresh_toggle_handlers () {
 
 	$("div.btn-parent").on('click', 'button#refresh', function() {
 		ajax_refresh_graph();
+	});
+}
+
+function autoRefreshMsgShowLogsHandlers() {
+	var auto_refresh_id = setInterval(updateMsgShowLogsTbl, 5000);
+
+	$("div.btn-parent").on('click', 'button#cancel_refresh', function() {
+		clearInterval(auto_refresh_id);
+		$("button#cancel_refresh").toggleClass("disabled");
+		$("button#start_refresh").toggleClass("disabled");
+		$("button#refresh").toggleClass("disabled");
+	});
+
+	$("div.btn-parent").on('click', 'button#start_refresh', function() {
+		auto_refresh_id = setInterval(updateMsgShowLogsTbl, 3000);
+		$("button#start_refresh").toggleClass("disabled");
+		$("button#cancel_refresh").toggleClass("disabled");
+		$("button#refresh").toggleClass("disabled");
+	});
+
+	$("div.btn-parent").on('click', 'button#refresh', function() {
+		updateMsgShowLogsTbl();
 	});
 }
 
