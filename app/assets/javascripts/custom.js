@@ -598,6 +598,7 @@ function searchResetBtnHandler() {
 	$("#search-reset").click(function() {
 		$(this).closest(".panel").find("input").val('');
 		d3.selectAll('circle.c3-shape').style('fill', 'rgb(31, 119, 180)');
+		$('rect.c3-event-rect').removeAttr('fill').removeAttr('style');
 	});
 }
 

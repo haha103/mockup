@@ -152,10 +152,11 @@ class MsgShowLogsController < ApplicationController
 				unless rand(5) == 0
 					m.count += rand(50)
 				end
+				m.collected_at = collected_at
 				m.save
 				h = MsgShowLogHistory.new
 				h.count = m.count
-				h.collected_at = m.collected_at
+				h.collected_at = collected_at
 				h.msg_show_log = m
 				h.save
 			end
