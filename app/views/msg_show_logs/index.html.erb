@@ -9,124 +9,14 @@
 		<h3 class="h-btn-sm-align">Message Counters - <%= @msg_show_logs.first.test_run.name %></h3>
 	</div>
   <div class="col-md-6">
-		<%= link_to '<span class="glyphicon glyphicon-refresh"></span> Refresh'.html_safe, msg_show_logs_path(:update => 1, :test_run_id => @msg_show_logs.first.test_run.id), :class => "btn btn-default btn-sm pull-right" %>
+    <button class="btn btn-default btn-sm pull-right" id="btn-update-msg-show-logs" data-test-run-id="<%= @msg_show_logs.first.test_run.id %>">
+			<span class="glyphicon glyphicon-refresh"></span> Update
+		</button>
 	</div>
 </div>
 
 <hr class="hr-condensed"/>
 
-<table class="table table-condensed table-hover">
-  <thead>
-    <tr>
-      <th style="width:60px;">Type</th>
-      <th style="width:60px;">Count</th>
-      <th>Message</th>
-      <th colspan="2">Known Issues</th>
-    </tr>
-  </thead>
-  <tbody>
-		<% i = 0 %>
-		<% @msg_show_logs.each do |m| %>
-			<% i += 1 %>
-			<% color = m.count >= 4000 ? "danger" : (m.count >= 3000 ? "warning" : "") %>
-      <tr>
-        <td><%= m.msg_type.name %></td>
-				<td><%= m.count %></td>
-				<td id="full-message" class="clickable redirect hover <%= color %>" href="<%= msg_show_log_path(m) %>"><%= m.message.gsub(/\s*,\s*/, ',').gsub(/,/, ', ') %></td>
-        <td style="width:30px;">
-					<% icon_class = m.known_issues.empty? ? "glyphicon-star-empty" : "glyphicon-star" %>
-					<span class="glyphicon <%= icon_class %> clickable" data-toggle="collapse" data-target="row<%= i %>" id="row<%= i %>"></span>
-				</td>
-        <td>
-          <button class="btn btn-default btn-xs btn-known-issue-details" data-msg-show-log-id="<%= m.id %>"><span class="glyphicon glyphicon-list-alt"></span>
- &nbsp;Details</button>
-				</td>
-      </tr>
-      <tr class="collapse success" id="row<%= i %>">
-        <td></td>
-        <td></td>
-				<td colspan="3">
-					<% m.known_issues.each do |i| %>
-						<span class="label label-warning"><%= i.name %></span>
-					<% end %>
-				</td>
-      </tr>
-		<% end %>
-  </tbody>
-</table>
-
-<div class="row">
-	<%= will_paginate @msg_show_logs,
-				:renderer => BootstrapPagination::Rails,
-				:class => "pagination-sm pagination-condensed pull-right",
-				:previous_label => "<<",
-				:next_label => ">>" %>
+<div class="refreshable">
+	<%= render "tbl_msg_show_logs" %>
 </div>
-
-<div class="modal fade" id="known-issue-modal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close h4-align" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Known Issue Details</h4>
-      </div>
-      <div class="modal-body">
-        <input type="hidden" name="msg-show-log-id" value=""/>
-        <pre id="known-issue-context">
-        </pre>
-				<button type="button" class="btn btn-default" id="add-known-issue"><span class="glyphicon glyphicon-list"></span> &nbsp;Add</button>
-				<button type="button" class="btn btn-default" id="create-known-issue"><span class="glyphicon glyphicon-plus"></span> &nbsp;New</button>
-        <hr class="hr-condensed"/>
-        <div class="alert alert-success" id="known-issue-added-alert" hidden></div>
-				<div class="alert alert-success" id="known-issue-saved-alert" hidden></div>
-				<div class="alert alert-success" id="known-issue-removed-alert" hidden></div>
-
-        <div class="panel panel-primary hidden" id="add-known-issue">
-          <div class="panel-heading">
-						<button type="button" class="close panel-close h4-align">&times;</button>
-            <h4 class="panel-title">Add Existing Known Issue</h4>
-					</div>
-          <div class="panel-body">
-            <div class="form-group">
-							<select class="form-control" name="existing-known-issues">
-              </select>
-						</div>
-						<button type="button" class="btn btn-success btn-block" id="add-known-issue-go"><span class="glyphicon glyphicon-floppy-save"></span> &nbsp;Save</button>
-					</div>
-				</div>
-
-        <div class="hidden panel panel-primary" id="new-known-issue">
-          <div class="panel-heading">
-						<button type="button" class="close panel-close h4-align">&times;</button>
-            <h4 class="panel-title">Create Known Issue</h4>
-					</div>
-          <div class="panel-body">
-            <div class="form-group">
-              <label for="known-issue-name">Name</label>
-              <input class="form-control" type="text" name="known-issue-name" value=""/>
-						</div>
-						<div class="form-group" id="known-issue-patterns">
-              <label for="known-issue-patterns">Patterns</label>
-              <select multiple class="form-control" name="known-issue-patterns" style="padding-top:12px; padding-bottom:12px;">
-              </select>
-						</div>
-						<button type="button" class="btn btn-success btn-block" id="create-known-issue-go"><span class="glyphicon glyphicon-floppy-save"></span> &nbsp;Save</button>
-					</div>
-				</div>
-				
-				<table class="table table-condensed table-hover" id="tbl-known-issue-details">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Name</th>
-							<th style="width:70%;">Patterns</th>
-              <th style="width:50px;"></th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->

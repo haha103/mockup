@@ -58,10 +58,15 @@ class MsgShowLogsController < ApplicationController
   # GET /msg_show_logs
   # GET /msg_show_logs.json
   def index
-		update_all(params[:test_run_id]) if params["update"] == "1"
     @msg_show_logs = MsgShowLog.order(count: :desc).paginate(:page => params[:page], :per_page => 20)
   end
 
+	def indextbl
+		update_all(params[:test_run_id])
+    @msg_show_logs = MsgShowLog.order(count: :desc).paginate(:page => params[:page], :per_page => 20)
+		render "msg_show_logs/indextbl", :layout => false
+  end
+	
   # GET /msg_show_logs/1
   # GET /msg_show_logs/1.json
   def show

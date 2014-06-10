@@ -1,7 +1,4 @@
 $(document).on('ready page:load', function() {
-	$(".clickable.redirect").click(function () {
-		window.document.location = $(this).attr("href");
-	});
 
 	var path = window.location.pathname;
 
@@ -18,7 +15,9 @@ $(document).on('ready page:load', function() {
 		searchAdvancedGoBtnHandler();
 		sortableColumnsHandler();
 	} else {
-		knwonIssueBtnHandler();
+		updateMsgShowLogsTblBtnHandler();
+		goToMsgDetailsLinkHandler();
+		knownIssueBtnHandler();
 		createKnownIssueBtnHandler();
 		createKnownIssueGoBtnHandler();
 		addKnownIssueBtnHandler();
@@ -30,6 +29,21 @@ $(document).on('ready page:load', function() {
 	panelCloseBtnHander();
 	
 });
+
+function goToMsgDetailsLinkHandler() {
+	$('div.refreshable').on('click', '.clickable.redirect', function () {
+		window.document.location = $(this).attr("href");
+	});
+}
+
+function updateMsgShowLogsTblBtnHandler() {
+	$('button#btn-update-msg-show-logs').click(function(e) {
+		var test_run_id = $(this).attr('data-test-run-id');
+		var url = '/msg_show_logs/indextbl?test_run_id=' + test_run_id;
+		$('div.refreshable').load(url);
+		e.preventDefault();
+	});
+}
 
 function sortableColumnsHandler() {
 	$('table#tbl-msg-details').on('click', 'th.clickable', function(e) {
@@ -74,20 +88,20 @@ function sortableColumnsHandler() {
 }
 
 function knownIssueRowToggleHandler() {
-	$('table tbody tr span.clickable[data-toggle="collapse"]').click(function() {
+	$('div.refreshable').on('click', 'table tbody tr span.clickable[data-toggle="collapse"]', function() {
 		var id = $(this).attr('id');
 		$(this).closest('tr').siblings('tr#' + id).toggleClass("in");
 	});
 }
 
 function panelCloseBtnHander() {
-	$('.panel-heading > button.panel-close').click(function() {
+	$('div.refreshable').on('click', '.panel-heading > button.panel-close', function() {
 		$(this).parents('.panel').toggleClass('hidden');
 	});
 }
 
 function addKnownIssueBtnHandler() {
-	$('button#add-known-issue').click(function(e) {
+	$('div.refreshable').on('click', 'button#add-known-issue', function(e) {
 		$('div#add-known-issue').removeClass("hidden");
 		$('select[name="existing-known-issues"]').empty();
 		
@@ -134,7 +148,7 @@ function loadKnownIssueTable() {
 }
 
 function removeKnownIssueBtnHandler() {
-	$("table#tbl-known-issue-details").on('click', 'button.btn-remove-known-issue', function() {
+	$('div.refreshable').on('click', 'table#tbl-known-issue-details button.btn-remove-known-issue', function() {
 		var data = {
 			known_issue_id : $(this).attr('data-known-issue-id'),
 			msg_show_log_id : $('input[name="msg-show-log-id"]').val()
@@ -160,7 +174,7 @@ function removeKnownIssueBtnHandler() {
 }
 
 function addKnownIssueGoBtnHandler() {
-	$('button#add-known-issue-go').click(function(e) {
+	$('div.refreshable').on('click', 'button#add-known-issue-go', function(e) {
 		$('div#add-known-issue').addClass("hidden");
 		var data = {
 			known_issue_id : $('select[name="existing-known-issues"] option:selected').val(),
@@ -188,7 +202,7 @@ function addKnownIssueGoBtnHandler() {
 }
 
 function createKnownIssueBtnHandler() {
-	$('button#create-known-issue').click(function(e) {
+	$('div.refreshable').on('click', 'button#create-known-issue', function(e) {
 		$('div#new-known-issue').removeClass("hidden");
 		e.preventDefault();
 	});
@@ -232,12 +246,12 @@ function createKnownIssueGoBtnHandler() {
 	});
 }
 
-function knwonIssueBtnHandler() {
-	$('.btn-known-issue-details').click(function(e) {
+function knownIssueBtnHandler() {
+	$('div.refreshable').on('click', '.btn-known-issue-details', function(e) {
 		var message = $(this).parent().parent().find('td#full-message').text();
 		$('pre#known-issue-context').text(message);
 		var regexp = /.*(Expected: .*),\s*(Received: [^ ]+)\s*\((Cause: [^\)]*)\)\..*/;
-		var patterns = message.match(regexp).slice(1,4);
+		var patterns = message.match(regexp) ? message.match(regexp).slice(1,4) : [];
 		$('select[name="known-issue-patterns"]').empty();
 		_.each(patterns, function(p) {
 			$('select[name="known-issue-patterns"]').append('<option>' + p + '</option>')
